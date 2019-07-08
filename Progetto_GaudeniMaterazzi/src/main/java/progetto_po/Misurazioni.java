@@ -4,10 +4,10 @@ public class Misurazioni {
     private double DMPS;
     private double CPC;
 
-    Misurazioni(String dmps, String cps) {
+    Misurazioni(String dmps, String cpc) {
 
         this.DMPS = Double.parseDouble(dmps);
-        this.CPC = Double.parseDouble(cps);
+        this.CPC = Double.parseDouble(cpc);
     }
 }
 
