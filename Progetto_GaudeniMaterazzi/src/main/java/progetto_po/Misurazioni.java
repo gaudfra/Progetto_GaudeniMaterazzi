@@ -16,9 +16,9 @@ class date extends Misurazioni {
     private int month;
     private int year;
 
-    date(String date, String dmps, String cps) {
+    date(String date, String dmps, String cpc) {
 
-        super(dmps, cps);
+        super(dmps, cpc);
         String[] dmy = date.split("-");
         this.day = Integer.parseInt(dmy[0]);
         this.month = Integer.parseInt(dmy[1]);
