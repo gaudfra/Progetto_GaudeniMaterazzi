@@ -1,22 +1,13 @@
 package Controller;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.commons.io.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -28,7 +19,7 @@ import static org.apache.commons.io.FileUtils.copyURLToFile;
 @Controller
 public class SRController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getSteamingFile() throws Exception {
+    public String getFile() throws Exception {
 
         File f = new File("file.csv");
 
@@ -73,7 +64,6 @@ public class SRController {
                     }
                 }
                 System.out.println( "OK" );
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -83,48 +73,23 @@ public class SRController {
             File o = new File("FileDiOggetti.dat");
             if(!o.exists() && !o.isDirectory()){
                 try {
-                    Scanner var = new Scanner(new BufferedReader(new FileReader ("file.csv")));
-                    ArrayList<Misurazioni> obj = new ArrayList<Misurazioni>();
-                    String data = var.nextLine();
-                    String data2 = null;
-                    String data3 = null;
-                    String full = null;
+                    Scanner csv = new Scanner(new BufferedReader(new FileReader ("file.csv")));
+                    ArrayList<Misurazioni> lista_oggetti = new ArrayList<Misurazioni>();
+                    String line = csv.nextLine();
 
-                    while (var.hasNextLine()) {
-                        data = var.nextLine();
-                        data2 = var.nextLine();
-                        if (data2.endsWith("--") && (var.nextLine()).startsWith("V:")) {
-                            data2+=data3;
-                        }
-                        full = data + data2;
-
-                        Matcher m = Pattern.compile("\"[^\"]*\"").matcher(full);
-                        StringBuffer sb = new StringBuffer();
-                        while(m.find()) {
-                            m.appendReplacement(sb, m.group().replaceAll(",", "."));
-                        }
-                        m.appendTail(sb);
-
-                        full = sb.toString();
-                        full = full.replaceAll("\"","");
-                        System.out.println(full);
-
-                        ArrayList<String> parts = new ArrayList<String>();
-                        String[] parti = full.split(",");
-                        System.out.println(Arrays.toString(parti)); //prova stampa
-
-                        for (int i = 0; i<12; i++) {
-                            parts.add(parti[i]);
-                        }
-                        Misurazioni foo = new Data_Ora.datetime(); // passare parametri)
-                        obj.add(foo);
-                        System.out.println(foo.toString());
+                    while (csv.hasNextLine()) {
+                        line = csv.nextLine();
+                        String[] SeparaData = line.split(" ");
+                        String[] Separatempo = SeparaData[1].split(",");
+                        Misurazioni misurazione = new Data_Ora.datetime(Separatempo[0], SeparaData[0], Separatempo[1], Separatempo[2]); // passare parametri)
+                        lista_oggetti.add(misurazione);
+                        System.out.println(misurazione.toString());
                     }
-                    var.close();
+                    csv.close();
 
-                    ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("FileDiOggetti.dat")));
-                    out.writeObject(obj);
-                    out.close();
+                    ObjectOutputStream OutputFile = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("FileDiOggetti.dat")));
+                    OutputFile.writeObject(lista_oggetti);
+                    OutputFile.close();
                 }
                 catch (Exception e) {
                     System.out.println("Errore di lettura" + e);

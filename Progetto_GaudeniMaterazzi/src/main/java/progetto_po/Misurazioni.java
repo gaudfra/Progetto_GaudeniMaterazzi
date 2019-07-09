@@ -2,7 +2,9 @@ package progetto_po;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class Misurazioni {
+import java.io.Serializable;
+
+public class Misurazioni implements Serializable {
     private double DMPS;
     private double CPC;
 
