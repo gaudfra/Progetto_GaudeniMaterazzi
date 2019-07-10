@@ -29,7 +29,6 @@ public class Data_Ora {
             this.second = Double.parseDouble(hms[2]);
         }
 
-
         @JsonIgnore
         public int getDay(){
             return day;
@@ -38,13 +37,10 @@ public class Data_Ora {
         public int getMonth(){
             return month;
         }
-
         @JsonIgnore
         public int getYear(){
             return year;
         }
-
-
         @JsonIgnore
         public int getHour(){
             return hour;
