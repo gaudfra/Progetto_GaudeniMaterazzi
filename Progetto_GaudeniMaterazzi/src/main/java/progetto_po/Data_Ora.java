@@ -2,9 +2,11 @@ package progetto_po;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.io.Serializable;
+
 public class Data_Ora {
 
-    public static class datetime extends Misurazioni {
+    public static class datetime extends Misurazioni implements Serializable {
         private int day;
         private int month;
         private int year;
