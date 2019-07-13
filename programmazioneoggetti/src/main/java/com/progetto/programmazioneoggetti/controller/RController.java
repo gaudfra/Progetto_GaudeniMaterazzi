@@ -9,12 +9,21 @@ import java.util.ArrayList;
 @RestController
 public class RController {
 
-    @RequestMapping( value = "/obj", method = RequestMethod.GET, produces = "application/json")
-    public ArrayList<Misurazioni> method(@RequestParam(name = "param1", defaultValue = "capra") String param1) throws Exception{
+    @RequestMapping( value = "/obj_list", method = RequestMethod.GET, produces = "application/json")
+    public ArrayList<Misurazioni> obj_list() throws Exception{
 
-        ArrayList<Misurazioni> lista_oggetti = new ArrayList<>();
-        Functions.obj(lista_oggetti);
+        return Functions.obj_list();
+    }
 
-        return lista_oggetti;
+    @RequestMapping( value = "/obj_day", method = RequestMethod.GET, produces = "application/json")
+    public ArrayList<Misurazioni> obj_day (@RequestParam(name = "param_day", defaultValue = "1") String param_day) throws Exception{
+
+        return Functions.obj_day(param_day);
+    }
+
+    @RequestMapping( value = "/obj_date", method = RequestMethod.GET, produces = "application/json")
+    public ArrayList<Misurazioni> obj_date (@RequestParam(name = "param_date", defaultValue = "2016-1-1") String param_date) throws Exception{
+
+        return Functions.obj_date(param_date);
     }
 }

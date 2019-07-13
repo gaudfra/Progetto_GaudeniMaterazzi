@@ -15,8 +15,9 @@ import java.util.ArrayList;
 
 public class Functions {
 
-    public static ArrayList<Misurazioni> obj(ArrayList<Misurazioni> lista_oggetti) throws Exception {
+    public static ArrayList<Misurazioni> obj_list () throws Exception {
 
+        ArrayList<Misurazioni> lista_oggetti = new ArrayList<>();
         try {
 
             URLConnection openConnection = new URL("http://data.europa.eu/euodp/data/api/3/action/package_show?id=jrc-abcis-ap-dmpspc-2016").openConnection();
@@ -87,5 +88,38 @@ public class Functions {
         }
 
         return lista_oggetti;
+    }
+
+    public static ArrayList<Misurazioni> obj_day (String param_day) throws Exception {
+
+        ArrayList<Misurazioni> giorno = new ArrayList<>();
+        int DAY = Integer.parseInt(param_day);
+
+        for(Misurazioni i : obj_list()) {
+
+            if (i.getDay() == DAY) {
+                giorno.add(i);
+            }
+        }
+
+        return giorno;
+    }
+
+    public static ArrayList<Misurazioni> obj_date (String param_date) throws Exception{
+
+        ArrayList<Misurazioni> giorni = new ArrayList<>();
+        String[] dmy = param_date.split("-");
+        int DAY = Integer.parseInt(dmy[2]);
+        int MONTH = Integer.parseInt(dmy[1]);
+        int YEAR = Integer.parseInt(dmy[0]);
+
+        for(Misurazioni i : obj_list()) {
+
+            if (i.getDay() == DAY && i.getMonth() == MONTH && i.getYear() == YEAR) {
+                giorni.add(i);
+            }
+        }
+
+        return giorni;
     }
 }
