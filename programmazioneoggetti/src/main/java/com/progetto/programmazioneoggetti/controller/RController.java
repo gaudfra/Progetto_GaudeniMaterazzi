@@ -1,92 +1,29 @@
 package com.progetto.programmazioneoggetti.controller;
 
+import com.progetto.programmazioneoggetti.Functions;
 import com.progetto.programmazioneoggetti.model.Misurazioni;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 
 @RestController
 public class RController {
 
-    @RequestMapping( value = "/obj", method = RequestMethod.GET, produces = "application/json")
-    public ArrayList<Misurazioni> method(@RequestParam(name = "param1", defaultValue = "capra") String param1) throws Exception{
+    @RequestMapping( value = "/obj_list", method = RequestMethod.GET, produces = "application/json")
+    public ArrayList<Misurazioni> obj_list() throws Exception{
 
-        ArrayList<Misurazioni> lista_oggetti = new ArrayList<>();
-        try {
+        return Functions.obj_list();
+    }
 
-            URLConnection openConnection = new URL("http://data.europa.eu/euodp/data/api/3/action/package_show?id=jrc-abcis-ap-dmpspc-2016").openConnection();
-            openConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
-            InputStream in = openConnection.getInputStream();
+    @RequestMapping( value = "/obj_day", method = RequestMethod.GET, produces = "application/json")
+    public ArrayList<Misurazioni> obj_day (@RequestParam(name = "param_day", defaultValue = "1") String param_day) throws Exception{
 
-            String data = "";
-            String line = "";
-            try {
-                InputStreamReader inR = new InputStreamReader(in);
-                BufferedReader buf = new BufferedReader(inR);
+        return Functions.obj_day(param_day);
+    }
 
-                while ((line = buf.readLine()) != null) {
-                    data += line;
-                    System.out.println(line);
-                }
+    @RequestMapping( value = "/obj_date", method = RequestMethod.GET, produces = "application/json")
+    public ArrayList<Misurazioni> obj_date (@RequestParam(name = "param_date", defaultValue = "2016-1-1") String param_date) throws Exception{
 
-            } finally {
-                in.close();
-            }
-
-            JSONObject obj = (JSONObject) JSONValue.parseWithException(data);
-            JSONObject objI = (JSONObject) (obj.get("result"));
-            JSONArray objA = (JSONArray) (objI.get("resources"));
-
-            for (Object o : objA) {
-                if (o instanceof JSONObject) {
-                    JSONObject o1 = (JSONObject) o;
-                    String format = (String) o1.get("format");
-                    String urlA = (String) o1.get("url");
-                    URL urlD = new URL(urlA);
-                    System.out.println(format + " | " + urlD);
-
-                    if (format.contains("CSV")) {
-                        try {
-
-                            URLConnection openConnection2 = new URL(urlA).openConnection();
-                            BufferedReader in2 = new BufferedReader(new InputStreamReader(openConnection2.getInputStream()));
-                            in2.readLine();
-
-                            String inputLine;
-                            while ((inputLine = in2.readLine()) != null) {
-
-                                try {
-
-                                    String[] SeparaData = inputLine.split(" ");
-                                    String[] Separatempo = SeparaData[1].split(",");
-                                    Misurazioni misurazione = new Misurazioni(Separatempo[0], SeparaData[0], Separatempo[1], Separatempo[2]); // passare parametri)
-                                    lista_oggetti.add(misurazione);
-
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            in.close();
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    System.out.println("OK");
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return lista_oggetti;
+        return Functions.obj_date(param_date);
     }
 }
