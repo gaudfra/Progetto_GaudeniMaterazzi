@@ -164,4 +164,20 @@ public class Functions {
         return data;
     }
 
+    //  public static ArrayList<Misurazioni> datehour(String param_day, String param_month, String param_hour) throws Exception{
+
+    //      ArrayList<Misurazioni> data = new ArrayList<>();
+    //     int DAY = Integer.parseInt(param_day);
+    //     int MONTH = Integer.parseInt(param_month);
+    //     int HOUR = Integer.parseInt(param_hour);
+        //int YEAR = Integer.parseInt(param_year);
+
+    //    for(Misurazioni i : obj_list()) {
+//
+    //       if (i.getDay() == DAY && i.getMonth() == MONTH && i.getHour() == HOUR  /*&& i.getYear() == YEAR*/) {
+    //           data.add(i);
+    //       }
+    //    }
+    //    return data;
+    //}
 }

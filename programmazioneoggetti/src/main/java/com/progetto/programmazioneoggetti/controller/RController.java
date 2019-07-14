@@ -36,6 +36,11 @@ public class RController {
         return new Stats(Functions.obj_data(param_day, param_month));
     }
 
-    //aggiungi ricerca per orario su data
+    //@RequestMapping( value = "/obj_date_hour", method = RequestMethod.GET, produces = "application/json")
+    //public ArrayList<Misurazioni> datehour(@RequestParam(name = "param_day", defaultValue = "vuoto") String param_day,
+    //      @RequestParam(name = "param_month", defaultValue = "vuoto") String param_month,
+    //                         @RequestParam(name = "param_hour", defaultValue = "vuoto") String param_hour) throws Exception{
+//
+    //    return Functions.datehour(param_day, param_month,param_hour);
 }
 
