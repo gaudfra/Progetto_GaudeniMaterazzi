@@ -29,8 +29,9 @@ public class Stats implements Serializable {
         double max_cpc = 0;
 
         Misurazioni primo_obj = lista_oggetti.get(0);
-        double min_cpc = primo_obj.getCPC();
-        double min_dmps = primo_obj.getDMPS();
+
+       double min_cpc = primo_obj.getCPC();
+       double min_dmps = primo_obj.getDMPS();
 
         int j = 0;
 
