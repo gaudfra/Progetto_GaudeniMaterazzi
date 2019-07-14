@@ -27,10 +27,13 @@ public class Stats implements Serializable {
         double dmps = 0;
         double min_dmps = 0;
         double max_dmps = 0;
-        double devstd_dmps = 0;
         double min_cpc = 0;
         double max_cpc = 0;
-        double devstd_cpc = 0;
+
+        Misurazioni primo_obj = lista_oggetti.get(0);
+        min_cpc = primo_obj.getCPC();
+        min_dmps = primo_obj.getDMPS();
+
         int j = 0;
 
         for( Misurazioni i: lista_oggetti){
@@ -40,9 +43,19 @@ public class Stats implements Serializable {
                 max_dmps = i.getDMPS();
             }
 
-            if(i.getDMPS() > max_cpc){
+            if(i.getCPC() > max_cpc){
 
                 max_cpc = i.getCPC();
+            }
+
+            if(i.getDMPS() < min_dmps){
+
+                min_dmps = i.getDMPS();
+            }
+
+            if(i.getCPC() < min_cpc){
+
+                min_cpc = i.getCPC();
             }
 
             cpc += i.getCPC();
@@ -54,10 +67,13 @@ public class Stats implements Serializable {
         this.avg_cpc = cpc/j;
         this.sum_dmps = dmps;
         this.sum_cpc = cpc;
+        this.min_cpc = min_cpc;
+        this.min_dmps = min_dmps;
         this.max_cpc = max_cpc;
         this.max_dmps = max_dmps;
         this.devstd_cpc = devstd_cpc(j, avg_cpc, lista_oggetti);
-        this.devstd_dmps = devstd_cpc(j, avg_dmps, lista_oggetti);
+        this.devstd_dmps = devstd_dmps(j, avg_dmps, lista_oggetti);
+        this.count = j;
     }
 
     public double getMin_dmps() {
@@ -154,7 +170,7 @@ public class Stats implements Serializable {
         double sum = 0;
 
         for(Misurazioni i: lista_oggetti){
-            sum += (avg - i.getDMPS())*(avg - i.getDMPS());
+            sum += Math.pow(avg - i.getDMPS(),2);
         }
         return sqrt(sum/count);
     }
@@ -164,7 +180,7 @@ public class Stats implements Serializable {
         double sum = 0;
 
         for(Misurazioni i: lista_oggetti){
-            sum += (avg - i.getCPC())*(avg - i.getCPC());
+            sum += Math.pow(avg - i.getCPC(),2);
         }
         return sqrt(sum/count);
     }
