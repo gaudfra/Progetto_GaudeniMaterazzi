@@ -66,8 +66,9 @@ public class Functions {
                                     String[] SeparaData = inputLine.split(" ");
                                     String[] Separatempo = SeparaData[1].split(",");
                                     Misurazioni misurazione = new Misurazioni(Separatempo[0], SeparaData[0], Separatempo[1], Separatempo[2]); // passare parametri)
-                                    lista_oggetti.add(misurazione);
-
+                                    if (misurazione.getDMPS() >= 0 && misurazione.getCPC() >= 0){
+                                        lista_oggetti.add(misurazione);
+                                    }
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -90,36 +91,77 @@ public class Functions {
         return lista_oggetti;
     }
 
-    public static ArrayList<Misurazioni> obj_day (String param_day) throws Exception {
+    public static ArrayList<Misurazioni> obj_data (String param_day, String param_month) throws Exception {
 
-        ArrayList<Misurazioni> giorno = new ArrayList<>();
+        ArrayList<Misurazioni> data = new ArrayList<>();
+
+        if(!param_day.equals("vuoto") && param_month.equals("vuoto")){
+
+            data = day(param_day);
+        }
+
+        else if(param_day.equals("vuoto") && !param_month.equals("vuoto")){
+
+            data = month(param_month);
+        }
+
+        if(!param_day.equals("vuoto") && !param_month.equals("vuoto")){
+
+            data = day_month(param_day, param_month);
+        }
+
+
+        return data;
+    }
+
+    // funzioni per le altre funzioni
+
+    public static ArrayList<Misurazioni> day(String param_day) throws Exception{
+
+        ArrayList<Misurazioni> data = new ArrayList<>();
         int DAY = Integer.parseInt(param_day);
+        //int MONTH = Integer.parseInt(param_month);
+        //int YEAR = Integer.parseInt(param_year);
 
         for(Misurazioni i : obj_list()) {
 
-            if (i.getDay() == DAY) {
-                giorno.add(i);
+            if (i.getDay() == DAY /*&& i.getMonth() == MONTH && i.getYear() == YEAR*/) {
+                data.add(i);
             }
         }
-
-        return giorno;
+        return data;
     }
 
-    public static ArrayList<Misurazioni> obj_date (String param_date) throws Exception{
+    public static ArrayList<Misurazioni> month(String param_month) throws Exception{
 
-        ArrayList<Misurazioni> giorni = new ArrayList<>();
-        String[] dmy = param_date.split("-");
-        int DAY = Integer.parseInt(dmy[2]);
-        int MONTH = Integer.parseInt(dmy[1]);
-        int YEAR = Integer.parseInt(dmy[0]);
+        ArrayList<Misurazioni> data = new ArrayList<>();
+        //int DAY = Integer.parseInt(param_day);
+        int MONTH = Integer.parseInt(param_month);
+        //int YEAR = Integer.parseInt(param_year);
 
         for(Misurazioni i : obj_list()) {
 
-            if (i.getDay() == DAY && i.getMonth() == MONTH && i.getYear() == YEAR) {
-                giorni.add(i);
+            if (i.getMonth() == MONTH ) {
+                data.add(i);
             }
         }
-
-        return giorni;
+        return data;
     }
+
+    public static ArrayList<Misurazioni> day_month(String param_day, String param_month) throws Exception{
+
+        ArrayList<Misurazioni> data = new ArrayList<>();
+        int DAY = Integer.parseInt(param_day);
+        int MONTH = Integer.parseInt(param_month);
+        //int YEAR = Integer.parseInt(param_year);
+
+        for(Misurazioni i : obj_list()) {
+
+            if (i.getDay() == DAY && i.getMonth() == MONTH /*&& i.getYear() == YEAR*/) {
+                data.add(i);
+            }
+        }
+        return data;
+    }
+
 }
