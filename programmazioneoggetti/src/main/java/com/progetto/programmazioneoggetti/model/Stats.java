@@ -1,4 +1,4 @@
-package com.progetto.programmazioneoggetti;
+package com.progetto.programmazioneoggetti.model;
 
 import com.progetto.programmazioneoggetti.model.Misurazioni;
 
