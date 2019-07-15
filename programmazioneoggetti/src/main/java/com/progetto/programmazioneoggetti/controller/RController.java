@@ -36,11 +36,20 @@ public class RController {
         return new Stats(Functions.obj_data(param_day, param_month));
     }
 
-    //@RequestMapping( value = "/obj_date_hour", method = RequestMethod.GET, produces = "application/json")
-    //public ArrayList<Misurazioni> datehour(@RequestParam(name = "param_day", defaultValue = "vuoto") String param_day,
-    //      @RequestParam(name = "param_month", defaultValue = "vuoto") String param_month,
-    //                         @RequestParam(name = "param_hour", defaultValue = "vuoto") String param_hour) throws Exception{
-//
-    //    return Functions.datehour(param_day, param_month,param_hour);
-}
+    @RequestMapping( value = "/obj_date_hour", method = RequestMethod.GET, produces = "application/json")
+    public ArrayList<Misurazioni> date_hour(@RequestParam(name = "param_day", defaultValue = "vuoto") String param_day,
+                                            @RequestParam(name = "param_month", defaultValue = "vuoto") String param_month,
+                                            @RequestParam(name = "param_hour", defaultValue = "vuoto") String param_hour) throws Exception {
 
+        return Functions.obj_date_hour(param_day, param_month, param_hour);
+    }
+
+    @RequestMapping( value = "/obj_date_hour_stats", method = RequestMethod.GET, produces = "application/json")
+    public Stats date_hour_stats(@RequestParam(name = "param_day", defaultValue = "vuoto") String param_day,
+                                 @RequestParam(name = "param_month", defaultValue = "vuoto") String param_month,
+                                 @RequestParam(name = "param_hour", defaultValue = "vuoto") String param_hour) throws Exception {
+
+        return new Stats(Functions.obj_date_hour(param_day, param_month, param_hour));
+    }
+
+}
