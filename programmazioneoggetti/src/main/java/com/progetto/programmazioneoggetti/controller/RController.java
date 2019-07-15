@@ -62,6 +62,7 @@ public class RController {
                                                 @RequestParam(name = "dmps", defaultValue = "-1") double param_dmps) throws Exception {
         return Functions.filterscpc(param_cpc);
     }
+
     @RequestMapping( value = "filtersdmps", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Misurazioni> filtrimisuredmps ( @RequestParam(name = "dmps", defaultValue = "-1") double param_dmps) throws Exception {
        return Functions.filtersdmps(param_dmps);
