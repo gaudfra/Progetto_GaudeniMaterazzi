@@ -98,52 +98,45 @@ public class Functions {
         return lista_oggetti;
     }
 
-    public static ArrayList<Misurazioni> obj_date (int param_day, int param_month) throws Exception {
-
-        ArrayList<Misurazioni> data = new ArrayList<>();
-
-        if((param_day >= 1 && param_day <= 31) && (param_month < 1 || param_month > 12 )){
-
-            data = day(param_day);
-        }
-
-        else if((param_day < 1 || param_day > 31 ) && (param_month >= 1 && param_month <= 12)){
-
-            data = month(param_month);
-        }
-
-        else if((param_day >= 1 && param_day <= 31) && (param_month >= 1 && param_month <= 12)){
-
-            data = date(param_day, param_month);
-        }
-
-        else {
-
-            System.out.println("Parametri di ricerca tutti sbagliati");
-        }
-
-        return data;
-    }
 
     public static ArrayList<Misurazioni> obj_date_hour (int param_day, int param_month, int param_hour) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
         if((param_day >= 1 && param_day <= 31) && (param_month < 1 || param_month > 12 ) && (param_hour >= 0 && param_hour < 24)){
-
+            System.out.println("Parametro di ricerca del mese sbagliato");
             data = day_hour(param_day, param_hour);
         }
 
         else if((param_day < 1 || param_day > 31 ) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)){
-
+            System.out.println("Parametri di ricerca del giorno sbagliato");
             data = month_hour(param_month, param_hour);
         }
 
-        else if((param_day >= 1 && param_day <= 31) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)){
+        else if ((param_day>=1 && param_day <=31) && (param_month >= 1 && param_month <= 12) && (param_hour < 0 || param_hour > 24)) {
+            System.out.println("Parametro di ricerca dell'ora sbagliato");
+            data = date(param_day, param_month);
 
-            data = date_hour(param_day, param_month, param_hour);
+        }
+        else if ((param_day < 1 || param_day > 31) && (param_month < 1 || param_month > 12) && (param_hour >= 0 && param_hour < 24)){
+            System.out.println("Parametri di ricerca del giorno e del mese sbagliati");
+            data = hour(param_hour);
         }
 
+        else if((param_day < 1 || param_day > 31) && (param_month >= 1 && param_month <= 12) && (param_hour < 0 || param_hour > 24)){
+            System.out.println("Parametri di ricerca del giorno e dell'ora sbagliati");
+            data = month(param_month);
+        }
+
+        else if((param_day >= 1 && param_day <= 31) && (param_month < 1 || param_month > 12) && (param_hour < 0 || param_hour > 24)){
+            System.out.println("Parametri di ricerca del mese e dell'ora sbagliati");
+            data = day(param_day);
+        }
+
+        else if ((param_day >= 1 && param_day <= 31) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)){
+            System.out.println("Parametri di ricerca tutti giusti");
+            data = date_hour(param_day, param_month, param_hour);
+        }
         else {
 
             System.out.println("Parametri di ricerca tutti sbagliati");
@@ -176,6 +169,37 @@ public class Functions {
             }
         }
         return meta;
+}
+
+public static ArrayList<Misurazioni> filtersdate (int param_day1, int param_month1, int param_day2, int param_month2) throws Exception {
+        ArrayList<Misurazioni> data = new ArrayList<>();
+if (param_day1 < 1 || param_day1 > 31 || param_month1 < 1 || param_month1 > 12) System.out.println("Limite inferiore errato");
+if (param_day2 < 1 || param_day2 > 31 || param_month2 < 1 || param_month2 > 12) System.out.println("Limite superiore errato");
+if ((param_day1>param_day2 && param_month1 == param_month2) || (param_month1>param_month2)) System.out.println("Limite superiore maggiore del limite inferiore");
+    for(Misurazioni i : obj_list()){
+
+        if (((i.getDay() >= param_day1 && i.getMonth() == param_month1 )||(i.getDay() <= param_day1 && i.getMonth()> param_month1)) && ((i.getDay() <= param_day2 && i.getMonth() == param_month2) || (i.getDay() >= param_day2 && i.getMonth()< param_month2))) {
+            data.add(i);
+        }
+    }
+        return data;
+}
+
+public static ArrayList<Misurazioni> filterscpc (double param_cpc) throws Exception {
+    ArrayList<Misurazioni> data = new ArrayList<>();
+    for (Misurazioni i : obj_list()) {
+        if (i.getCPC()>= param_cpc) data.add(i);
+    }
+    return data;
+
+}
+
+public static ArrayList<Misurazioni> filtersdmps (double param_dmps) throws Exception {
+    ArrayList<Misurazioni> data = new ArrayList<>();
+    for (Misurazioni i : obj_list()){
+        if (i.getDMPS()>= param_dmps) data.add(i);
+    }
+    return data;
 }
 
     /* FUNZIONI BASE DI QUELLE SOPRA */
@@ -260,4 +284,17 @@ public class Functions {
         }
         return data;
     }
+        public static ArrayList<Misurazioni> hour(int param_hour) throws Exception{
+
+            ArrayList<Misurazioni> data = new ArrayList<>();
+
+            for(Misurazioni i : obj_list()) {
+
+                if (i.getHour() == param_hour ) {
+                    data.add(i);
+                }
+            }
+            return data;
+        }
+
 }
