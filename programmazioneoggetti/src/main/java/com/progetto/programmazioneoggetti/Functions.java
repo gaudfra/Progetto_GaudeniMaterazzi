@@ -175,10 +175,10 @@ public static ArrayList<Misurazioni> filtersdate (int param_day1, int param_mont
         ArrayList<Misurazioni> data = new ArrayList<>();
 if (param_day1 < 1 || param_day1 > 31 || param_month1 < 1 || param_month1 > 12) System.out.println("Limite inferiore errato");
 if (param_day2 < 1 || param_day2 > 31 || param_month2 < 1 || param_month2 > 12) System.out.println("Limite superiore errato");
-if ((param_day1>param_day2 && param_month1 == param_month2) || (param_month1>param_month2)) System.out.println("Limite superiore maggiore del limite inferiore");
+if ((param_day1>param_day2 && param_month1 == param_month2) || (param_month1>param_month2)) System.out.println("Limite inferiore maggiore del limite superiore");
     for(Misurazioni i : obj_list()){
 
-        if (((i.getDay() >= param_day1 && i.getMonth() == param_month1 )||(i.getDay() <= param_day1 && i.getMonth()> param_month1)) && ((i.getDay() <= param_day2 && i.getMonth() == param_month2) || (i.getDay() >= param_day2 && i.getMonth()< param_month2))) {
+        if (((i.getDay() >= param_day1 && i.getMonth() == param_month1 )||(i.getDay() <= param_day1 && i.getMonth()> param_month1) || (i.getDay() >= param_day1 && i.getMonth()>= param_month1)) && ((i.getDay() <= param_day2 && i.getMonth() == param_month2) || (i.getDay() >= param_day2 && i.getMonth()< param_month2) || (i.getDay() < param_day2 && i.getMonth() < param_month2))) {
             data.add(i);
         }
     }
@@ -284,6 +284,8 @@ public static ArrayList<Misurazioni> filtersdmps (double param_dmps) throws Exce
         }
         return data;
     }
+
+
         public static ArrayList<Misurazioni> hour(int param_hour) throws Exception{
 
             ArrayList<Misurazioni> data = new ArrayList<>();
