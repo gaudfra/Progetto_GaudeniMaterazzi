@@ -102,17 +102,17 @@ public class Functions {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        if((param_day > -1 && param_day < 31) && (param_month <= 1 || param_month > 12 )){
+        if((param_day >= 1 && param_day <= 31) && (param_month < 1 || param_month > 12 )){
 
             data = day(param_day);
         }
 
-        else if((param_day < 1 || param_day > 31 ) && (param_month >= 1 && param_month < 12)){
+        else if((param_day < 1 || param_day > 31 ) && (param_month >= 1 && param_month <= 12)){
 
             data = month(param_month);
         }
 
-        else if((param_day > -1 && param_day < 31) && (param_month >= 1 && param_month < 12)){
+        else if((param_day >= 1 && param_day <= 31) && (param_month >= 1 && param_month <= 12)){
 
             data = date(param_day, param_month);
         }
@@ -129,7 +129,7 @@ public class Functions {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        if((param_day > -1 && param_day <= 31) && (param_month < 1 || param_month > 12 ) && (param_hour >= 0 && param_hour < 24)){
+        if((param_day >= 1 && param_day <= 31) && (param_month < 1 || param_month > 12 ) && (param_hour >= 0 && param_hour < 24)){
 
             data = day_hour(param_day, param_hour);
         }
@@ -139,7 +139,7 @@ public class Functions {
             data = month_hour(param_month, param_hour);
         }
 
-        else if((param_day > -1 && param_day < 31) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)){
+        else if((param_day >= 1 && param_day <= 31) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)){
 
             data = date_hour(param_day, param_month, param_hour);
         }
