@@ -15,11 +15,6 @@ import java.util.ArrayList;
 
 public class Functions {
 
-    /* modificare le varie funzione in modo che si
-       possa passare direttamente il parametro castato
-       così da gestire gli eventuali errori di inserimento
-    */
-
     public static ArrayList<Misurazioni> obj_list () throws Exception {
 
         ArrayList<Misurazioni> lista_oggetti = new ArrayList<>();
@@ -96,55 +91,55 @@ public class Functions {
         return lista_oggetti;
     }
 
-    public static ArrayList<Misurazioni> obj_data (String param_day, String param_month) throws Exception {
+    public static ArrayList<Misurazioni> obj_data (int param_day, int param_month) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        if(!param_day.equals("vuoto") && (param_month.equals("vuoto") /*|| param_month < 1 || param_month > 12 */ ) ){
+        if((param_day > -1 && param_day < 31) && (param_month < 1 || param_month > 12 )){
 
             data = day(param_day);
         }
 
-        else if(param_day.equals("vuoto") && !param_month.equals("vuoto")){
+        else if((param_day < 1 || param_day > 31 )&& (param_month > 1 && param_month < 31)){
 
             data = month(param_month);
         }
 
-        else if(!param_day.equals("vuoto") && !param_month.equals("vuoto")){
+        else if((param_day > -1 && param_day < 31) && (param_month > 1 && param_month < 31)){
 
             data = date(param_day, param_month);
         }
 
         else {
 
-            System.out.println("La ricerca non ha dato risultati");
+            System.out.println("Parametri di ricerca tutti sbagliati");
         }
 
         return data;
     }
 
-    public static ArrayList<Misurazioni> obj_date_hour (String param_day, String param_month, String param_hour) throws Exception {
+    public static ArrayList<Misurazioni> obj_date_hour (int param_day, int param_month, int param_hour) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        if(!param_day.equals("vuoto") && param_month.equals("vuoto") && !param_hour.equals("vuoto")){
+        if((param_day > -1 && param_day < 31) && (param_month < 1 || param_month > 12 ) && (param_hour >= 0 && param_hour < 24)){
 
             data = day_hour(param_day, param_hour);
         }
 
-        else if(param_day.equals("vuoto") && !param_month.equals("vuoto") && !param_hour.equals("vuoto")){
+        else if((param_day < 1 || param_day > 31 )&& (param_month > 1 && param_month < 31) && (param_hour >= 0 && param_hour < 24)){
 
             data = month_hour(param_month, param_hour);
         }
 
-        else if(!param_day.equals("vuoto") && !param_month.equals("vuoto") && !param_hour.equals("vuoto")){
+        else if((param_day > -1 && param_day < 31) && (param_month > 1 && param_month < 31) && (param_hour >= 0 && param_hour < 24)){
 
             data = date_hour(param_day, param_month, param_hour);
         }
 
         else {
 
-            System.out.println("La ricerca non ha dato risultati");
+            System.out.println("Parametri di ricerca tutti sbagliati");
         }
 
         return data;
@@ -152,74 +147,52 @@ public class Functions {
 
     /* FUNZIONI BASE DI QUELLE SOPRA */
 
-    public static ArrayList<Misurazioni> day(String param_day) throws Exception{
+    public static ArrayList<Misurazioni> day(int param_day) throws Exception{
 
         ArrayList<Misurazioni> data = new ArrayList<>();
-        int DAY = Integer.parseInt(param_day);
 
         for(Misurazioni i : obj_list()) {
 
-            if (i.getDay() == DAY) {
+            if (i.getDay() == param_day) {
                 data.add(i);
             }
         }
         return data;
     }
 
-    public static ArrayList<Misurazioni> month(String param_month) throws Exception{
+    public static ArrayList<Misurazioni> month(int param_month) throws Exception{
 
         ArrayList<Misurazioni> data = new ArrayList<>();
-        int MONTH = Integer.parseInt(param_month);
 
         for(Misurazioni i : obj_list()) {
 
-            if (i.getMonth() == MONTH ) {
+            if (i.getMonth() == param_month ) {
                 data.add(i);
             }
         }
         return data;
     }
 
-    public static ArrayList<Misurazioni> date(String param_day, String param_month) throws Exception{
+    public static ArrayList<Misurazioni> date(int param_day, int param_month) throws Exception{
 
         ArrayList<Misurazioni> data = new ArrayList<>();
-        int DAY = Integer.parseInt(param_day);
-        int MONTH = Integer.parseInt(param_month);
 
         for(Misurazioni i : obj_list()) {
 
-            if (i.getDay() == DAY && i.getMonth() == MONTH ) {
+            if (i.getDay() == param_day && i.getMonth() == param_month ) {
                 data.add(i);
             }
         }
         return data;
     }
 
-    public static ArrayList<Misurazioni> day_hour(String param_day, String param_hour) throws Exception{
+    public static ArrayList<Misurazioni> day_hour(int param_day, int param_hour) throws Exception{
 
         ArrayList<Misurazioni> data = new ArrayList<>();
-        int DAY = Integer.parseInt(param_day);
-        int HOUR = Integer.parseInt(param_hour);
 
         for(Misurazioni i : obj_list()) {
 
-            if (i.getDay() == DAY && i.getHour() == HOUR ) {
-
-                data.add(i);
-            }
-        }
-        return data;
-    }
-
-    public static ArrayList<Misurazioni> month_hour(String param_month, String param_hour) throws Exception{
-
-        ArrayList<Misurazioni> data = new ArrayList<>();
-        int MONTH = Integer.parseInt(param_month);
-        int HOUR = Integer.parseInt(param_hour);
-
-        for(Misurazioni i : obj_list()) {
-
-            if (i.getMonth() == MONTH && i.getHour() == HOUR ) {
+            if (i.getDay() == param_day && i.getHour() == param_hour ) {
 
                 data.add(i);
             }
@@ -227,16 +200,27 @@ public class Functions {
         return data;
     }
 
-    public static ArrayList<Misurazioni> date_hour(String param_day, String param_month, String param_hour) throws Exception{
+    public static ArrayList<Misurazioni> month_hour(int param_month, int param_hour) throws Exception{
 
         ArrayList<Misurazioni> data = new ArrayList<>();
-        int DAY = Integer.parseInt(param_day);
-        int MONTH = Integer.parseInt(param_month);
-        int HOUR = Integer.parseInt(param_hour);
 
         for(Misurazioni i : obj_list()) {
 
-            if (i.getDay() == DAY && i.getMonth() == MONTH && i.getHour() == HOUR ) {
+            if (i.getMonth() == param_month && i.getHour() == param_hour ) {
+
+                data.add(i);
+            }
+        }
+        return data;
+    }
+
+    public static ArrayList<Misurazioni> date_hour(int param_day, int param_month, int param_hour) throws Exception{
+
+        ArrayList<Misurazioni> data = new ArrayList<>();
+
+        for(Misurazioni i : obj_list()) {
+
+            if (i.getDay() == param_day && i.getMonth() == param_month && i.getHour() == param_hour ) {
 
                 data.add(i);
             }
