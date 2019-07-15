@@ -15,6 +15,18 @@ public class Misurazioni implements Serializable {
     private int minute;
     private double second;
 
+    public String typeDMPS = "double";
+    public String typeCPC = "double";
+    public String typeDay = "int";
+    public String typeMonth = "int";
+    public String typeYear = "int";
+    public String typeHour = "int";
+    public String typeMinute = "int";
+    public String typeSecond = "double";
+
+
+
+
     public Misurazioni(String times, String date, String dmps, String cpc) {
 
         this.DMPS = Double.parseDouble(dmps);
@@ -46,6 +58,7 @@ public class Misurazioni implements Serializable {
         this.minute = Integer.parseInt(hms[1]);
         this.second = Double.parseDouble(hms[2]);
     }
+
 
     public void setDMPS(double DMPS) {
         this.DMPS = DMPS;

@@ -5,6 +5,8 @@ import com.progetto.programmazioneoggetti.model.Stats;
 import com.progetto.programmazioneoggetti.model.Misurazioni;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
+import com.progetto.programmazioneoggetti.model.Metadati;
+import java.lang.reflect.Field;
 
 
 @RestController
@@ -55,4 +57,9 @@ public class RController {
         return new Stats(Functions.obj_date_hour(param_day, param_month, param_hour));
     }
 
+
+    @RequestMapping( value = "/meta", method = RequestMethod.GET, produces = "application/json" )
+    public static ArrayList<Metadati> meta_list () throws Exception {
+        return Functions.obj_meta();
+    }
 }

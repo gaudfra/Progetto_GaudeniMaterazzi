@@ -1,5 +1,6 @@
 package com.progetto.programmazioneoggetti;
 
+import com.progetto.programmazioneoggetti.model.Metadati;
 import com.progetto.programmazioneoggetti.model.Misurazioni;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,8 +13,12 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.lang.reflect.Field;
+
+
 
 public class Functions {
+   static String prima_linea;
 
     public static ArrayList<Misurazioni> obj_list () throws Exception {
 
@@ -56,7 +61,7 @@ public class Functions {
 
                             URLConnection openConnection2 = new URL(urlA).openConnection();
                             BufferedReader in2 = new BufferedReader(new InputStreamReader(openConnection2.getInputStream()));
-                            in2.readLine();
+                            String prima_linea = in2.readLine();
 
                             String inputLine;
                             while ((inputLine = in2.readLine()) != null) {
@@ -144,6 +149,27 @@ public class Functions {
 
         return data;
     }
+
+
+public static ArrayList<Metadati> obj_meta () throws Exception {
+        ArrayList<Metadati> meta = new ArrayList<>();
+        Class<?> data = obj_list().getClass();
+        int i = 0;
+        String[] firstLine = prima_linea.split(",");
+        for (Field field: data.getDeclaredFields())
+        {
+            try
+            {
+               meta.add(new Metadati(field.getName(), firstLine[i], field.getType().toString()));
+               i++;
+            }
+            catch (ArrayIndexOutOfBoundsException e)
+            {
+                System.out.println("Index out of bound");
+            }
+        }
+        return meta;
+}
 
     /* FUNZIONI BASE DI QUELLE SOPRA */
 
