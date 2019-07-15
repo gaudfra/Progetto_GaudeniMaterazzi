@@ -103,17 +103,17 @@ public class Functions {
         ArrayList<Misurazioni> data = new ArrayList<>();
 
         if((param_day >= 1 && param_day <= 31) && (param_month < 1 || param_month > 12 )){
-
+            System.out.println("Parametro di ricerca del mese sbagliato");
             data = day(param_day);
         }
 
         else if((param_day < 1 || param_day > 31 ) && (param_month >= 1 && param_month <= 12)){
-
+            System.out.println("Parametro di ricerca del giorno sbagliato");
             data = month(param_month);
         }
 
         else if((param_day >= 1 && param_day <= 31) && (param_month >= 1 && param_month <= 12)){
-
+            System.out.println("Parametri di ricerca entrambi giusti sbagliati");
             data = date(param_day, param_month);
         }
 
@@ -130,20 +130,24 @@ public class Functions {
         ArrayList<Misurazioni> data = new ArrayList<>();
 
         if((param_day >= 1 && param_day <= 31) && (param_month < 1 || param_month > 12 ) && (param_hour >= 0 && param_hour < 24)){
-
+            System.out.println("Parametro di ricerca del mese sbagliato");
             data = day_hour(param_day, param_hour);
         }
 
         else if((param_day < 1 || param_day > 31 ) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)){
-
+            System.out.println("Parametri di ricerca del giorno sbagliato");
             data = month_hour(param_month, param_hour);
         }
 
         else if((param_day >= 1 && param_day <= 31) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)){
-
+            System.out.println("Parametri di ricerca tutti giusti");
             data = date_hour(param_day, param_month, param_hour);
         }
 
+        else if ((param_day>=1 && param_day <=31) && (param_month >= 1 && param_month <= 12) && (param_hour < 0 || param_hour > 24)) {
+            System.out.println("Paramentro di ricerca dell'ora sbagliato");
+            data = date(param_day, param_month);
+        }
         else {
 
             System.out.println("Parametri di ricerca tutti sbagliati");
