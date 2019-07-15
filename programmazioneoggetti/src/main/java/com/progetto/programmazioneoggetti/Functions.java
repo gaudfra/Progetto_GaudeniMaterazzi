@@ -18,7 +18,8 @@ import java.lang.reflect.Field;
 
 
 public class Functions {
-   static String prima_linea;
+
+    static String[] prima_linea;
 
     public static ArrayList<Misurazioni> obj_list () throws Exception {
 
@@ -61,7 +62,8 @@ public class Functions {
 
                             URLConnection openConnection2 = new URL(urlA).openConnection();
                             BufferedReader in2 = new BufferedReader(new InputStreamReader(openConnection2.getInputStream()));
-                            String prima_linea = in2.readLine();
+                            prima_linea = in2.readLine().split(" ");
+                            System.out.println(prima_linea);
 
                             String inputLine;
                             while ((inputLine = in2.readLine()) != null) {
@@ -96,21 +98,21 @@ public class Functions {
         return lista_oggetti;
     }
 
-    public static ArrayList<Misurazioni> obj_data (int param_day, int param_month) throws Exception {
+    public static ArrayList<Misurazioni> obj_date (int param_day, int param_month) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        if((param_day > -1 && param_day < 31) && (param_month < 1 || param_month > 12 )){
+        if((param_day > -1 && param_day < 31) && (param_month <= 1 || param_month > 12 )){
 
             data = day(param_day);
         }
 
-        else if((param_day < 1 || param_day > 31 )&& (param_month > 1 && param_month < 31)){
+        else if((param_day < 1 || param_day > 31 ) && (param_month >= 1 && param_month < 12)){
 
             data = month(param_month);
         }
 
-        else if((param_day > -1 && param_day < 31) && (param_month > 1 && param_month < 31)){
+        else if((param_day > -1 && param_day < 31) && (param_month >= 1 && param_month < 12)){
 
             data = date(param_day, param_month);
         }
@@ -127,17 +129,17 @@ public class Functions {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        if((param_day > -1 && param_day < 31) && (param_month < 1 || param_month > 12 ) && (param_hour >= 0 && param_hour < 24)){
+        if((param_day > -1 && param_day <= 31) && (param_month < 1 || param_month > 12 ) && (param_hour >= 0 && param_hour < 24)){
 
             data = day_hour(param_day, param_hour);
         }
 
-        else if((param_day < 1 || param_day > 31 )&& (param_month > 1 && param_month < 31) && (param_hour >= 0 && param_hour < 24)){
+        else if((param_day < 1 || param_day > 31 ) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)){
 
             data = month_hour(param_month, param_hour);
         }
 
-        else if((param_day > -1 && param_day < 31) && (param_month > 1 && param_month < 31) && (param_hour >= 0 && param_hour < 24)){
+        else if((param_day > -1 && param_day < 31) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)){
 
             data = date_hour(param_day, param_month, param_hour);
         }
@@ -150,12 +152,17 @@ public class Functions {
         return data;
     }
 
+    public static ArrayList<Metadati> obj_meta() throws Exception {
 
-public static ArrayList<Metadati> obj_meta () throws Exception {
+        /* fare più parsing per la stringa in modo da far corrispondere ad ogni variabile la corrispondente
+        descizione e tipo di variabile */
+
+        System.out.println(prima_linea[1]);
+
         ArrayList<Metadati> meta = new ArrayList<>();
         Class<?> data = obj_list().getClass();
         int i = 0;
-        String[] firstLine = prima_linea.split(",");
+        String[] firstLine = prima_linea[1].split(",");
         for (Field field: data.getDeclaredFields())
         {
             try

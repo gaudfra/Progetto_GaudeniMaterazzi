@@ -1,13 +1,16 @@
 package com.progetto.programmazioneoggetti.model;
 
 public class Metadati {
+
     private String alias;
     private String sourcefield;
     private String type;
 
 
     public Metadati(String alias, String sourcefield, String type) {
+
         this.alias = alias;
+        this.sourcefield = sourcefield;
         this.type = type;
     }
 
@@ -34,8 +37,9 @@ public class Metadati {
     public void setType(String type) {
         this.type = type;
     }
-    public String toString()
-    {
+
+    public String toString(){
+
         return "Metadata [alias=" + alias + ", sourceField=" + sourcefield + ", type=" + type + "]";
     }
 
