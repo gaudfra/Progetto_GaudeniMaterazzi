@@ -32,19 +32,6 @@ public class RController {
         return new Stats(Functions.obj_list());
     }
 
-    @RequestMapping( value = "/obj_date", method = RequestMethod.GET, produces = "application/json")
-    public ArrayList<Misurazioni> obj_date(@RequestParam(name = "day", defaultValue = "-1") int param_day,
-                                           @RequestParam(name = "month", defaultValue = "-1") int param_month) throws Exception{
-
-        return Functions.obj_date(param_day, param_month);
-    }
-
-    @RequestMapping( value = "/obj_data_stats", method = RequestMethod.GET, produces = "application/json")
-    public Stats obj_date_stats(@RequestParam(name = "day", defaultValue = "-1") int param_day,
-                                @RequestParam(name = "month", defaultValue = "-1") int param_month) throws Exception{
-
-        return new Stats(Functions.obj_date(param_day, param_month));
-    }
 
     @RequestMapping( value = "/obj_date_hour", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Misurazioni> date_hour(@RequestParam(name = "day", defaultValue = "-1") int param_day,
