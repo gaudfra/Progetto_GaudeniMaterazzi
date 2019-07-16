@@ -174,9 +174,17 @@ public class Functions {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        if ((param_day1 < 1 || param_day1 > 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_day2 >= 1 && param_day2 <= 31) && (param_month2 >= 1 && param_month2 <= 12)) {
 
-            System.out.println("Limite inferiore day errato"); // ritorna le misurazioni dal primo mese fino al limite superiore
+
+        if ((param_month2 < 1 || param_month2 > 12) && (param_month1 < 1 || param_month1 > 12)) {
+
+            System.out.println("Impossibile ricerca alternativa"); //.X.X
+
+        }
+
+        else if ((param_day1 < 1 || param_day1 > 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_day2 >= 1 && param_day2 <= 31) && (param_month2 >= 1 && param_month2 <= 12)) {
+
+            System.out.println("Solo il limite inferiore day è errato"); // XVVV ritorna le misurazioni dal primo mese fino al limite superiore
 
             for (Misurazioni i: obj_list()){
 
@@ -189,22 +197,25 @@ public class Functions {
 
         else if ((param_month1 < 1 || param_month1 > 12) && (param_day2 >= 1 && param_day2 <= 31) && (param_month2 >= 1 && param_month2 <= 12)) {
 
-            System.out.println("Limite inferiore month e/o day errati"); //ritorna le misurazioni dal primo giorno dell'anno fino al limite superiore
+            System.out.println("Limite inferiore month errato");
 
-            if (param_day1 < 1 || param_day1 > 31 ) System.out.println("Limite inferiore giorno errato");
+            if (param_day1 < 1 || param_day1 > 31 ) System.out.println("Limite inferiore giorno errato"); // XXVV ritorna le misurazioni dal primo giorno dell'anno fino al limite superiore
+            if (param_day1 >= 1 && param_day1 <= 31)  System.out.println("Limite inferiore giorno giusto"); //VXVV
 
-            for (Misurazioni i: obj_list()){
 
-                if ((i.getDay() <= param_day2 && i.getMonth() == param_month2) || (i.getDay() >= param_day2 && i.getMonth() < param_month2) || (i.getDay() <= param_day2 && i.getMonth() <= param_month2)) {
+            for (Misurazioni i : obj_list()) {
 
-                    data.add(i);
+                    if ((i.getDay() <= param_day2 && i.getMonth() == param_month2) || (i.getDay() >= param_day2 && i.getMonth() < param_month2) || (i.getDay() <= param_day2 && i.getMonth() <= param_month2)) {
+
+                        data.add(i);
+                    }
                 }
-            }
+
         }
 
         else if ((param_day1 >= 1 && param_day1 <= 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_day2 < 1 || param_day2 > 31) && (param_month2 >= 1 && param_month2 <= 12)) {
 
-            System.out.println("Limite superiore day errato"); //ritorna misurazioni dopo il giorno iniziale e fino a tutto il mese finale
+            System.out.println("Limite superiore day errato"); // VVXV ritorna misurazioni dopo il giorno iniziale e fino a tutto il mese finale
 
             for (Misurazioni i: obj_list()){
 
@@ -219,7 +230,8 @@ public class Functions {
 
             System.out.println("Limite superiore month errato"); //ritorna le misurazioni a partire dal limite inferiore fino alla fine dell'anno
 
-            if (param_day2 < 1 || param_day2 > 31) System.out.println("Limite superiore giorno errato");
+            if (param_day2 < 1 || param_day2 > 31) System.out.println("Limite superiore giorno errato");  //VVXX
+            if (param_day2 >= 1 && param_day2 <= 31)  System.out.println("Limite superiore giorno giusto"); // VVVX
 
             for (Misurazioni i: obj_list()){
 
@@ -236,7 +248,7 @@ public class Functions {
 
             if ((param_month1 >= 1 && param_month1 <= 12) && (param_month2 < 1 || param_month2 > 12 )){
 
-                System.out.println("Unico parametro giusto month1"); //ritorna le misurazioni a partire da month1
+                System.out.println("Unico parametro giusto month1"); // XVXX ritorna le misurazioni a partire da month1
 
                 for (Misurazioni i: obj_list()){
 
@@ -250,7 +262,7 @@ public class Functions {
 
             else if (( param_month1 < 1 || param_month1 >12) && (param_month2 >=1 && param_month2 <= 12 )) {
 
-                System.out.println("Unico parametro giusto month2"); //ritorna le misurazioni dal primo giorno dell'anno fino al secondo mese incluso
+                System.out.println("Unico parametro giusto month2"); // XXXV ritorna le misurazioni dal primo giorno dell'anno fino al secondo mese incluso
 
                 for (Misurazioni i: obj_list()){
 
@@ -262,33 +274,55 @@ public class Functions {
 
             }
 
-            else {
+            else if ((param_month1 >=1 && param_month1 <=12) && (param_month2 >= 1 && param_month2 <= 12)) {
 
-                for (Misurazioni i: obj_list()) {  //ritorno le misurazioni del primo mese e fino a tutto il mese finale
+                System.out.println("Entrambi i mesi sono giusti"); //XVXV ritorno le misurazioni del primo mese e fino a tutto il mese finale
 
-                if (i.getMonth() >= param_month1 && i.getMonth() <= param_month2) {
+                for (Misurazioni i: obj_list()) {
+
+                    if (i.getMonth() >= param_month1 && i.getMonth() <= param_month2) {
 
                     data.add(i);
+
+                    }
+
                 }
             }
+        }
+
+        else if ((param_day1 < 1 || param_day1 > 31) && (param_month1>= 1 && param_month1<= 12) && (param_month2 < 1 || param_month2 > 12) && (param_day2 >=1 && param_day2 <= 31 )) {
+
+                System.out.println("Day1 e Month2 sono errati"); // XVVX ritorno le misurazioni del primo mese e fino alla fine dell'anno
+
+                for (Misurazioni i: obj_list()) {
+
+                    if (i.getMonth() >= param_month1) {
+
+                        data.add(i);
+
+                    }
+
+                }
+
+
+        }
+
+        else if ((param_day1 >= 1 && param_day1 <= 31) && (param_month1 < 1 || param_month1 > 12) && (param_month2 >= 1 && param_month2 <= 12) && (param_day2 < 1 || param_day2 > 31 )) {
+
+            System.out.println("Month1 e Day2 sono errati"); // VXXV ritorno le misurazioni dal primo giorno dell'anno e fino al secondo mese
+
+            for (Misurazioni i: obj_list()) {
+
+                if (i.getMonth() <= param_month2) {
+
+                    data.add(i);
+
+                }
+
             }
         }
 
-/*        else if ((param_day1 >= 1 && param_day1 <= 31) && (param_day2 < 1 || param_day2 > 31) && (param_month1 < 1 || param_month1 > 12) && (param_month2 >= 1 && param_month2 <= 12)){
 
-
-        }
-
-        else if((param_day1 < 1 || param_day1 > 31) && (param_day2 >= 1 && param_day2 <= 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_month2 < 1 || param_month2 > 12)){
-
-
-        }*/
-
-        else if ((param_month2 < 1 || param_month2 > 12) && (param_month1 < 1 || param_month1 > 12)) {
-
-            System.out.println("Impossibile ricerca alternativa");
-
-        }
 
         else if ((param_day1 > param_day2 && param_month1 == param_month2) || (param_month1 > param_month2)) {
 
