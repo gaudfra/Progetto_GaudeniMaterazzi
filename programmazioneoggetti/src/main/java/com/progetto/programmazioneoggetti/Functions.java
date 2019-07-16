@@ -19,7 +19,7 @@ import java.lang.reflect.Field;
 
 public class Functions {
 
-    static String[] prima_linea;
+    private static String[] prima_linea;
 
     public static ArrayList<Misurazioni> obj_list () throws Exception {
 
@@ -98,7 +98,6 @@ public class Functions {
         return lista_oggetti;
     }
 
-
     public static ArrayList<Misurazioni> obj_date_hour (int param_day, int param_month, int param_hour) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
@@ -171,36 +170,245 @@ public class Functions {
         return meta;
 }
 
-public static ArrayList<Misurazioni> filtersdate (int param_day1, int param_month1, int param_day2, int param_month2) throws Exception {
+    public static ArrayList<Misurazioni> date_filter (int param_day1, int param_month1, int param_day2, int param_month2) throws Exception {
+
         ArrayList<Misurazioni> data = new ArrayList<>();
-if (param_day1 < 1 || param_day1 > 31 || param_month1 < 1 || param_month1 > 12) System.out.println("Limite inferiore errato");
-if (param_day2 < 1 || param_day2 > 31 || param_month2 < 1 || param_month2 > 12) System.out.println("Limite superiore errato");
-if ((param_day1>param_day2 && param_month1 == param_month2) || (param_month1>param_month2)) System.out.println("Limite inferiore maggiore del limite superiore");
-    for(Misurazioni i : obj_list()){
 
-        if (((i.getDay() >= param_day1 && i.getMonth() == param_month1 )||(i.getDay() <= param_day1 && i.getMonth()> param_month1) || (i.getDay() >= param_day1 && i.getMonth()>= param_month1)) && ((i.getDay() <= param_day2 && i.getMonth() == param_month2) || (i.getDay() >= param_day2 && i.getMonth()< param_month2) || (i.getDay() < param_day2 && i.getMonth() < param_month2))) {
-            data.add(i);
+        if ((param_day1 < 1 || param_day1 > 31) && (param_month1 >= 1 || param_month1 <= 12) && (param_day2 >= 1 || param_day2 <= 31) && (param_month2 >= 1 || param_month2 <= 12)) {
+
+            System.out.println("Limite inferiore day errato");
+
+            for (Misurazioni i: obj_list()){
+
+                if ( i.getMonth() >= param_month1 && ((i.getDay() <= param_day2 && i.getMonth() == param_month2) || (i.getDay() >= param_day2 && i.getMonth() < param_month2) || (i.getDay() <= param_day2 && i.getMonth() <= param_month2))){
+
+                    data.add(i);
+                }
+            }
         }
-    }
+
+        else if ((param_month1 < 1 || param_month1 > 12) && (param_day2 >= 1 || param_day2 <= 31) && (param_month2 >= 1 || param_month2 <= 12)) {
+
+            System.out.println("Limite inferiore month errato");
+
+            for (Misurazioni i: obj_list()){
+
+                if ((i.getDay() <= param_day2 && i.getMonth() == param_month2) || (i.getDay() >= param_day2 && i.getMonth() < param_month2) || (i.getDay() <= param_day2 && i.getMonth() <= param_month2)) {
+
+                    data.add(i);
+                }
+            }
+        }
+
+        else if ((param_day1 >= 1 || param_day1 >= 31) && (param_month1 >= 1 || param_month1 <= 12) && (param_day2 < 1 || param_day2 > 31) && (param_month2 >= 1 || param_month2 <= 12)) {
+
+            System.out.println("Limite superiore day errato");
+
+            for (Misurazioni i: obj_list()){
+
+                if ((i.getDay() >= param_day1 && i.getMonth() == param_month1) || (i.getDay() <= param_day1 && i.getMonth() > param_month1) || (i.getDay() >= param_day1 && i.getMonth() >= param_month1) && i.getMonth() <= param_month2) {
+
+                    data.add(i);
+                }
+            }
+        }
+
+        else if ((param_day1 >= 1 || param_day1 <= 31) && (param_month1 >= 1 || param_month1 <= 12) && (param_month2 < 1 || param_month2 > 12)) {
+
+            System.out.println("Limite superiore month errato");
+
+            for (Misurazioni i: obj_list()){
+
+                if ((i.getDay() >= param_day1 && i.getMonth() == param_month1) || (i.getDay() <= param_day1 && i.getMonth() > param_month1) || (i.getDay() >= param_day1 && i.getMonth() >= param_month1)) {
+
+                    data.add(i);
+                }
+            }
+        }
+
+        else if ((param_day1 < 1 || param_day1 > 31) && (param_month1 >= 1 || param_month1 <= 12) && (param_day2 < 1 || param_day2 > 31) && (param_month2 >= 1 || param_month2 <= 12)) {
+
+            System.out.println("Limiti day errati");
+
+            for (Misurazioni i: obj_list()){
+
+                if ( i.getMonth() >= param_month1 && i.getMonth() < param_month2) {
+
+                    data.add(i);
+                }
+            }
+        }
+
+        else if (((param_day1 < 1 || param_day1 > 31) && (param_month2 < 1 || param_month2 > 12) && (param_month1 >= 1 || param_month1 <= 12) && (param_day2 >= 1 || param_day2 <= 31)) ||
+                 ((param_month1 < 1 || param_month1 > 12) && (param_day2 < 1 || param_day2 > 31) && (param_day1 >= 1 || param_day1 >= 31) && (param_month2 < 1 || param_month2 > 12)) ||
+                 ((param_day1 >= 1 || param_day1 >= 31) && (param_month1 < 1 || param_month1 > 12) && (param_day2 < 1 || param_day2 > 31) && (param_month2 < 1 || param_month2 > 12)) ||
+                 ((param_day1 < 1 || param_day1 > 31) && (param_month1 < 1 || param_month1 > 12) && (param_day2 >= 1 || param_day2 <= 31) && (param_month2 < 1 || param_month2 > 12)) ||
+                 ((param_month1 < 1 || param_month1 > 12) && (param_month2 < 1 || param_month2 > 12))) {
+
+            System.out.println("Impossibile ricerca alternativa");
+
+        }
+
+
+        else if ((param_day1 < 1 || param_day1 > 31) && (param_month1 >= 1 || param_month1 <= 12) && (param_day2 < 1 || param_day2 > 31) && (param_month2 < 1 || param_month2 > 12)) {
+
+            System.out.println("Unico parametro day");
+
+            for (Misurazioni i: obj_list()){
+
+                if (i.getMonth() >= param_month1){
+
+                    data.add(i);
+                }
+            }
+        }
+
+        else if ((param_day1 < 1 || param_day1 > 31) && (param_month1 < 1 || param_month1 > 12) && (param_day2 < 1 || param_day2 > 31) && (param_month2 >= 1 || param_month2 <= 12)) {
+
+            System.out.println("Unico parametro day");
+
+            for (Misurazioni i: obj_list()){
+
+                if (i.getMonth() <= param_month2){
+
+                    data.add(i);
+                }
+            }
+        }
+
+        else if ((param_day1 > param_day2 && param_month1 == param_month2) || (param_month1 > param_month2)) {
+
+            System.out.println("Limite inferiore maggiore del limite superiore");
+        }
+
+        else {
+
+            for(Misurazioni i : obj_list()){
+
+                if (((i.getDay() >= param_day1 && i.getMonth() == param_month1) || (i.getDay() <= param_day1 && i.getMonth() > param_month1) || (i.getDay() >= param_day1 && i.getMonth() >= param_month1)) &&
+                    ((i.getDay() <= param_day2 && i.getMonth() == param_month2) || (i.getDay() >= param_day2 && i.getMonth() < param_month2) || (i.getDay() <= param_day2 && i.getMonth() <= param_month2))) {
+
+                    data.add(i);
+                }
+            }
+        }
         return data;
-}
-
-public static ArrayList<Misurazioni> filterscpc (double param_cpc) throws Exception {
-    ArrayList<Misurazioni> data = new ArrayList<>();
-    for (Misurazioni i : obj_list()) {
-        if (i.getCPC()>= param_cpc) data.add(i);
     }
-    return data;
 
-}
+    public static ArrayList<Misurazioni> cpc_dmps_filter (double param_cpc_min, double param_cpc_max, double param_dmps_min, double param_dmps_max) throws Exception {
 
-public static ArrayList<Misurazioni> filtersdmps (double param_dmps) throws Exception {
-    ArrayList<Misurazioni> data = new ArrayList<>();
-    for (Misurazioni i : obj_list()){
-        if (i.getDMPS()>= param_dmps) data.add(i);
+        ArrayList<Misurazioni> data = new ArrayList<>();
+
+        if((param_cpc_max < 0 && param_cpc_min >= 0) && (param_dmps_min >= 0 && param_dmps_max >= 0 && param_dmps_min < param_dmps_max)) {
+
+            System.out.println("Parametro max cpc errato");
+
+            for (Misurazioni i : obj_list()) {
+
+                if ((i.getCPC() >= param_cpc_min) && (i.getDMPS() >= param_dmps_min && i.getDMPS() <= param_dmps_max)) {
+
+                    data.add(i);
+                }
+            }
+        }
+
+        else if((param_cpc_min < 0 && param_cpc_max >= 0) && (param_dmps_min >= 0 && param_dmps_max >= 0 && param_dmps_min < param_dmps_max)) {
+
+            System.out.println("Parametro min cpc errato");
+
+            for (Misurazioni i : obj_list()) {
+
+                if ((i.getCPC() <= param_cpc_min) && (i.getDMPS() >= param_dmps_min && i.getDMPS() <= param_dmps_max)) {
+
+                    data.add(i);
+                }
+            }
+        }
+
+        else if((param_cpc_max < param_cpc_min) && (param_dmps_min >= 0 && param_dmps_max >= 0 && param_dmps_min < param_dmps_max)) {
+
+            System.out.println("Max < min in cpc");
+
+            for (Misurazioni i : obj_list()) {
+
+                if (i.getDMPS() >= param_dmps_min && i.getDMPS() <= param_dmps_max) {
+
+                    data.add(i);
+                }
+            }
+
+        }
+
+        else if((param_dmps_min < 0 && param_dmps_max >= 0) && (param_cpc_min >= 0 && param_cpc_max >= 0 && param_cpc_min < param_cpc_max)) {
+
+            System.out.println("Parametro min dmps errato");
+
+            for (Misurazioni i : obj_list()) {
+
+                if ((i.getDMPS() <= param_dmps_max) && (i.getCPC() >= param_cpc_min && i.getCPC() <= param_cpc_max)) {
+
+                    data.add(i);
+                }
+            }
+        }
+
+        else if((param_dmps_max < 0 && param_dmps_min >= 0) && (param_cpc_min >= 0 && param_cpc_max >= 0 && param_cpc_min < param_cpc_max)) {
+
+            System.out.println("Parametro max dmps errato");
+
+            for (Misurazioni i : obj_list()) {
+
+                if ((i.getDMPS() >= param_dmps_min) && (i.getCPC() >= param_cpc_min && i.getCPC() <= param_cpc_max)) {
+
+                    data.add(i);
+                }
+            }
+        }
+
+        else if((param_dmps_max < param_dmps_min) && (param_cpc_min >= 0 && param_cpc_max >= 0 && param_cpc_min < param_cpc_max)) {
+
+            System.out.println("Max < min in dmps");
+
+            for (Misurazioni i : obj_list()) {
+
+                if (i.getCPC() >= param_cpc_min && i.getCPC() <= param_cpc_max) {
+
+                    data.add(i);
+                }
+            }
+
+        }
+
+        else if ((param_cpc_min < 0 && param_cpc_max >= 0) && (param_dmps_min < 0 && param_dmps_max >= 0)) {
+
+            System.out.println("");
+
+            for (Misurazioni i : obj_list()) {
+
+                if (i.getDMPS() <= param_dmps_max && i.getCPC() <= param_cpc_max) {
+
+                    data.add(i);
+                }
+            }
+
+        }
+
+        /* mancano dei casi............. da completare */
+
+        else{
+
+            for (Misurazioni i : obj_list()) {
+
+                if ((i.getCPC() >= param_cpc_min && i.getCPC() <= param_cpc_max) && (i.getDMPS() >= param_dmps_min && i.getDMPS() <= param_dmps_max)) {
+
+                    data.add(i);
+                }
+            }
+        }
+
+        return data;
     }
-    return data;
-}
+
 
     /* FUNZIONI BASE DI QUELLE SOPRA */
 
@@ -285,18 +493,16 @@ public static ArrayList<Misurazioni> filtersdmps (double param_dmps) throws Exce
         return data;
     }
 
+    public static ArrayList<Misurazioni> hour(int param_hour) throws Exception{
 
-        public static ArrayList<Misurazioni> hour(int param_hour) throws Exception{
+        ArrayList<Misurazioni> data = new ArrayList<>();
 
-            ArrayList<Misurazioni> data = new ArrayList<>();
+        for(Misurazioni i : obj_list()) {
 
-            for(Misurazioni i : obj_list()) {
-
-                if (i.getHour() == param_hour ) {
-                    data.add(i);
-                }
+            if (i.getHour() == param_hour ) {
+                data.add(i);
             }
-            return data;
         }
-
+        return data;
+    }
 }

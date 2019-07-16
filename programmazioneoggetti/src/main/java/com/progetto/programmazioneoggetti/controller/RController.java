@@ -11,9 +11,6 @@ import com.progetto.programmazioneoggetti.model.Metadati;
 @RestController
 public class RController {
 
-    /* invece di fare un nuovo indirizzo per le stats si aggiunge
-    un parametro bool che indica quale ritornare */
-
     @RequestMapping( value = "/", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Misurazioni> obj_list() throws Exception{
 
@@ -32,8 +29,7 @@ public class RController {
         return new Stats(Functions.obj_list());
     }
 
-
-    @RequestMapping( value = "/obj_date_hour", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping( value = "/date_hour", method = RequestMethod.GET, produces = "application/json")
     public ArrayList<Misurazioni> date_hour(@RequestParam(name = "day", defaultValue = "-1") int param_day,
                                             @RequestParam(name = "month", defaultValue = "-1") int param_month,
                                             @RequestParam(name = "hour", defaultValue = "-1") int param_hour) throws Exception {
@@ -41,7 +37,7 @@ public class RController {
         return Functions.obj_date_hour(param_day, param_month, param_hour);
     }
 
-    @RequestMapping( value = "/obj_date_hour_stats", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping( value = "/date_hour_stats", method = RequestMethod.GET, produces = "application/json")
     public Stats date_hour_stats(@RequestParam(name = "day", defaultValue = "-1") int param_day,
                                  @RequestParam(name = "month", defaultValue = "-1") int param_month,
                                  @RequestParam(name = "hour", defaultValue = "-1") int param_hour) throws Exception {
@@ -49,23 +45,21 @@ public class RController {
         return new Stats(Functions.obj_date_hour(param_day, param_month, param_hour));
     }
 
-    @RequestMapping( value = "/date_filters", method = RequestMethod.GET, produces = "application/json")
-    public ArrayList<Misurazioni> filtridate(@RequestParam(name = "day", defaultValue = "-1") int param_day1,
-                                         @RequestParam(name = "month", defaultValue = "-1") int param_month1,
-                                         @RequestParam(name = "day2", defaultValue = "-1") int param_day2,
-                                         @RequestParam(name = "month2", defaultValue = "-1") int param_month2) throws Exception {
-        return Functions.filtersdate(param_day1,param_month1, param_day2, param_month2);
+    @RequestMapping( value = "/date_filter", method = RequestMethod.GET, produces = "application/json")
+    public ArrayList<Misurazioni> date_filter(@RequestParam(name = "day", defaultValue = "-1") int param_day1,
+                                             @RequestParam(name = "month", defaultValue = "-1") int param_month1,
+                                             @RequestParam(name = "day2", defaultValue = "-1") int param_day2,
+                                             @RequestParam(name = "month2", defaultValue = "-1") int param_month2) throws Exception {
+
+        return Functions.date_filter(param_day1,param_month1, param_day2, param_month2);
     }
 
-    @RequestMapping( value = "/filterscpc", method = RequestMethod.GET, produces = "application/json")
-    public ArrayList<Misurazioni> filtrimisurecpc (@RequestParam(name = "cpc", defaultValue = "-1") double param_cpc,
-                                                @RequestParam(name = "dmps", defaultValue = "-1") double param_dmps) throws Exception {
-        return Functions.filterscpc(param_cpc);
-    }
+    @RequestMapping( value = "/values_filter", method = RequestMethod.GET, produces = "application/json")
+    public ArrayList<Misurazioni> cpc_dmps_filter (@RequestParam(name = "min_cpc", defaultValue = "-1") double param_cpc_min,
+                                              @RequestParam(name = "max_cpc", defaultValue = "-1") double param_cpc_max,
+                                              @RequestParam(name = "min_dmps", defaultValue = "-1") double param_dmps_min,
+                                              @RequestParam(name = "max_dmps", defaultValue = "-1") double param_dmps_max) throws Exception {
 
-    @RequestMapping( value = "filtersdmps", method = RequestMethod.GET, produces = "application/json")
-    public ArrayList<Misurazioni> filtrimisuredmps ( @RequestParam(name = "dmps", defaultValue = "-1") double param_dmps) throws Exception {
-       return Functions.filtersdmps(param_dmps);
+        return Functions.cpc_dmps_filter(param_cpc_min, param_cpc_max, param_dmps_min, param_dmps_max);
     }
-
 }
