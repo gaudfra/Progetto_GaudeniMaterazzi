@@ -487,64 +487,66 @@ public class Functions {
 
         }
 
-        else if ((param_cpc_min < 0 && param_cpc_max >= 0) && (param_dmps_min < 0 && param_dmps_max < 0)) {
+        else if ((param_cpc_min < 0 && param_cpc_max >= 0) && (param_dmps_max < 0)) {
 
-            System.out.println("Solo cpc max corretto"); //ritorno le misurazioni minori di cpc_max
+            if (param_dmps_min < 0) {
 
-            for (Misurazioni i : obj_list()) {
+                System.out.println("Solo cpc_max corretto"); //ritorno le misurazioni minori di cpc_max
 
-                if (i.getCPC() <= param_cpc_max) {
+                for (Misurazioni i : obj_list()) {
 
-                    data.add(i);
+                    if (i.getCPC() <= param_cpc_max) {
+
+                        data.add(i);
+                    }
+                }
+            }
+
+            else {
+
+                System.out.println("cpc_max e dmps_min corretti"); //ritorno le misurazioni minori di cpc_max e maggiori di dmps_min
+
+                for (Misurazioni i : obj_list()) {
+
+                    if ((i.getDMPS() >= param_dmps_min) && (i.getCPC() <= param_cpc_max)) {
+
+                        data.add(i);
+                    }
                 }
             }
 
         }
 
+        else if ((param_cpc_min >= 0 && param_cpc_max < 0) && (param_dmps_min < 0 )) {
 
-        else if ((param_cpc_min < 0 && param_cpc_max >= 0) && (param_dmps_min >= 0 && param_dmps_max < 0)) {
+            if (param_dmps_max < 0) {
 
-            System.out.println("Max cpc e min dmps corretti"); //ritorno le misurazioni minori di cpc_max e maggiori di dmps_min
+                System.out.println("Solo cpc_min corretto"); //ritorno le misurazioni maggiori di cpc_min
 
-            for (Misurazioni i : obj_list()) {
+                for (Misurazioni i : obj_list()) {
 
-                if ((i.getDMPS() >= param_dmps_min) && (i.getCPC() <= param_cpc_max)) {
+                    if (i.getCPC() >= param_cpc_min) {
 
-                    data.add(i);
+                        data.add(i);
+                    }
                 }
             }
 
-        }
+            else {
 
-        else if ((param_cpc_min >= 0 && param_cpc_max < 0) && (param_dmps_min < 0 && param_dmps_max < 0)) {
+                System.out.println("Solo cpc_min e dmps_max corretti"); //ritorno le misurazioni maggiori di cpc_min e minori di dmps_max
 
-            System.out.println("Solo cpc min corretto"); //ritorno le misurazioni maggiori di cpc_min
+                for (Misurazioni i : obj_list()) {
 
-            for (Misurazioni i : obj_list()) {
+                    if ((i.getCPC() >= param_cpc_min) && (i.getDMPS() <= param_dmps_max)) {
 
-                if (i.getCPC() >= param_cpc_min) {
-
-                    data.add(i);
+                        data.add(i);
+                    }
                 }
             }
-
         }
 
-        else if ((param_cpc_min >= 0 && param_cpc_max < 0) && (param_dmps_min < 0 && param_dmps_max >= 0)) {
-
-            System.out.println("Solo cpc_min e dmps_max corretti"); //ritorno le misurazioni maggiori di cpc_min e minori di dmps_max
-
-            for (Misurazioni i : obj_list()) {
-
-                if ((i.getCPC() >= param_cpc_min) && (i.getDMPS() <= param_dmps_max)) {
-
-                    data.add(i);
-                }
-            }
-
-        }
-
-        else{
+        else {
 
             System.out.println("Parametri tutti corretti");
 
