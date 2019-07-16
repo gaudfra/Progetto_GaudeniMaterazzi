@@ -19,8 +19,6 @@ import java.lang.reflect.Field;
 
 public class Functions {
 
-    private static String[] prima_linea;
-
     public static ArrayList<Misurazioni> obj_list () throws Exception {
 
         ArrayList<Misurazioni> lista_oggetti = new ArrayList<>();
@@ -62,8 +60,7 @@ public class Functions {
 
                             URLConnection openConnection2 = new URL(urlA).openConnection();
                             BufferedReader in2 = new BufferedReader(new InputStreamReader(openConnection2.getInputStream()));
-                            prima_linea = in2.readLine().split(" ");
-                            System.out.println(prima_linea);
+                            in2.readLine(); // salto prima riga
 
                             String inputLine;
                             while ((inputLine = in2.readLine()) != null) {
@@ -144,28 +141,15 @@ public class Functions {
         return data;
     }
 
-    public static ArrayList<Metadati> obj_meta() throws Exception {
-
-        /* fare più parsing per la stringa in modo da far corrispondere ad ogni variabile la corrispondente
-        descizione e tipo di variabile */
-
-        System.out.println(prima_linea[1]);
+    public static ArrayList<Metadati> obj_meta() {
 
         ArrayList<Metadati> meta = new ArrayList<>();
-        Class<?> data = obj_list().getClass();
         int i = 0;
-        String[] firstLine = prima_linea[1].split(",");
-        for (Field field: data.getDeclaredFields())
-        {
-            try
-            {
-               meta.add(new Metadati(field.getName(), firstLine[i], field.getType().toString()));
-               i++;
-            }
-            catch (ArrayIndexOutOfBoundsException e)
-            {
-                System.out.println("Index out of bound");
-            }
+
+        for (Field field: Misurazioni.class.getDeclaredFields()) {
+
+           meta.add(new Metadati(field.getName(), field.getType().toString()));
+           i++;
         }
         return meta;
 }
@@ -401,7 +385,6 @@ public class Functions {
             }
         }
 
-
         else if((param_cpc_max < param_cpc_min) && (param_dmps_min >= 0 && param_dmps_max >= 0 && param_dmps_min < param_dmps_max)) {
 
             System.out.println("Max < min in cpc"); //ritorno le misurazioni senza considerare cpc
@@ -415,7 +398,6 @@ public class Functions {
             }
 
         }
-
 
         else if((param_dmps_max < param_dmps_min) && (param_cpc_min >= 0 && param_cpc_max >= 0 && param_cpc_min < param_cpc_max)) {
 
