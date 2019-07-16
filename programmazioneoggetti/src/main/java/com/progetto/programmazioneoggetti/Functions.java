@@ -189,7 +189,7 @@ public class Functions {
 
         else if ((param_month1 < 1 || param_month1 > 12) && (param_day2 >= 1 && param_day2 <= 31) && (param_month2 >= 1 && param_month2 <= 12)) {
 
-            System.out.println("Limite inferiore month errato"); //ritorna le misurazioni dal primo giorno dell'anno fino al limite superiore
+            System.out.println("Limite inferiore month e/o day errati"); //ritorna le misurazioni dal primo giorno dell'anno fino al limite superiore
 
             if (param_day1 < 1 || param_day1 > 31 ) System.out.println("Limite inferiore giorno errato");
 
@@ -230,7 +230,7 @@ public class Functions {
             }
         }
 
-        else if ((param_day1 < 1 || param_day1 > 31) &&  (param_day2 < 1 || param_day2 > 31) ) {
+        else if ((param_day1 < 1 || param_day1 > 31) && (param_day2 < 1 || param_day2 > 31) ) {
 
             System.out.println("Limiti day errati");
 
@@ -274,10 +274,17 @@ public class Functions {
             }
         }
 
-        else if (((param_day1 < 1 || param_day1 > 31) && (param_month2 < 1 || param_month2 > 12) && (param_month1 >= 1 && param_month1 <= 12) && (param_day2 >= 1 && param_day2 <= 31)) ||
-                 ((param_day1 >= 1 && param_day1 <= 31) && (param_month1 < 1 || param_month1 > 12) && (param_day2 < 1 || param_day2 > 31) && (param_month2 >= 1 && param_month2 <= 12)) ||
-             //    ((param_day1 < 1 || param_day1 > 31) && (param_month1 < 1 || param_month1 > 12) && (param_day2 >= 1 || param_day2 <= 31) && (param_month2 < 1 || param_month2 > 12)) ||
-                 ((param_month1 < 1 || param_month1 > 12) && (param_month2 < 1 || param_month2 > 12))) {
+/*        else if ((param_day1 >= 1 && param_day1 <= 31) && (param_day2 < 1 || param_day2 > 31) && (param_month1 < 1 || param_month1 > 12) && (param_month2 >= 1 && param_month2 <= 12)){
+
+
+        }
+
+        else if((param_day1 < 1 || param_day1 > 31) && (param_day2 >= 1 && param_day2 <= 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_month2 < 1 || param_month2 > 12)){
+
+
+        }*/
+
+        else if ((param_month2 < 1 || param_month2 > 12) && (param_month1 < 1 || param_month1 > 12)) {
 
             System.out.println("Impossibile ricerca alternativa");
 
@@ -299,6 +306,7 @@ public class Functions {
                 }
             }
         }
+
         return data;
     }
 
