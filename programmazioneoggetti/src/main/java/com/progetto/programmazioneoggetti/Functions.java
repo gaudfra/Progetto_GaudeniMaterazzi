@@ -23,6 +23,12 @@ import java.lang.reflect.Field;
 
 public class Functions {
 
+    //Metodi
+
+    /**
+     * Stampa la lista di tutti gli oggetti di tipo Misurazioni.
+     * @return lista_oggetti
+     */
     public static ArrayList<Misurazioni> obj_list () throws Exception {
 
         ArrayList<Misurazioni> lista_oggetti = new ArrayList<>();
@@ -99,6 +105,13 @@ public class Functions {
         return lista_oggetti;
     }
 
+    /**
+     * Stampa la lista di tutti gli oggetti di tipo Misurazioni, filtrati secondo una certa data e ora, gestendo eventuali parametri errati.
+     * @param param_day giorno richiesto
+     * @param param_month mese richiesto
+     * @param param_hour ora richiesta
+     * @return data
+     */
     public static ArrayList<Misurazioni> obj_date_hour (int param_day, int param_month, int param_hour) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
@@ -135,7 +148,7 @@ public class Functions {
 
         else if ((param_day >= 1 && param_day <= 31) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)){
             System.out.println("Parametri di ricerca tutti giusti");
-            data = date_hour(param_day, param_month, param_hour);
+            data = date_hour(param_day, param_month, param_hour); //ritorno tutte le misurazioni con quella specifica data e ora
         }
         else {
 
@@ -145,6 +158,11 @@ public class Functions {
         return data;
     }
 
+
+    /**
+     * Stampa la lista di tutti i metadati.
+     * @return meta
+     */
     public static ArrayList<Metadati> obj_meta() {
 
         ArrayList<Metadati> meta = new ArrayList<>();
@@ -158,19 +176,27 @@ public class Functions {
         return meta;
 }
 
+    /**
+     * Stampa la lista di tutti gli oggetti di tipo Misurazioni, compresi tra una data iniziale ed una finale, gestendo eventuali parametri errati
+     * @param param_day1 limite inferiore giorno
+     * @param param_month1  limite inferiore mese
+     * @param param_day2 limite superiore giorno
+     * @param param_month2 limite superiore mese
+     * @return data
+     */
     public static ArrayList<Misurazioni> date_filter (int param_day1, int param_month1, int param_day2, int param_month2) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
         if ((param_month2 < 1 || param_month2 > 12) && (param_month1 < 1 || param_month1 > 12)) {
 
-            System.out.println("Impossibile ricerca alternativa, entrambi i mesi sono errati"); //.X.X
+            System.out.println("Impossibile ricerca alternativa, entrambi i mesi sono errati");
 
         }
 
         else if ((param_day1 < 1 || param_day1 > 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_day2 >= 1 && param_day2 <= 31) && (param_month2 >= 1 && param_month2 <= 12)) {
 
-            System.out.println("Solo il limite inferiore day è errato"); // XVVV ritorna le misurazioni dal primo mese fino al limite superiore
+            System.out.println("Solo il limite inferiore day è errato"); //ritorna le misurazioni dal primo mese fino al limite superiore
 
             for (Misurazioni i: obj_list()){
 
@@ -185,8 +211,8 @@ public class Functions {
 
             System.out.println("Limite inferiore month errato");
 
-            if (param_day1 < 1 || param_day1 > 31 ) System.out.println("Limite inferiore giorno errato"); // XXVV ritorna le misurazioni dal primo giorno dell'anno fino al limite superiore
-            if (param_day1 >= 1 && param_day1 <= 31)  System.out.println("Limite inferiore giorno giusto"); //VXVV
+            if (param_day1 < 1 || param_day1 > 31 ) System.out.println("Limite inferiore giorno errato"); //ritorna le misurazioni dal primo giorno dell'anno fino al limite superiore
+            if (param_day1 >= 1 && param_day1 <= 31)  System.out.println("Limite inferiore giorno giusto");
 
 
             for (Misurazioni i : obj_list()) {
@@ -201,7 +227,7 @@ public class Functions {
 
         else if ((param_day1 >= 1 && param_day1 <= 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_day2 < 1 || param_day2 > 31) && (param_month2 >= 1 && param_month2 <= 12)) {
 
-            System.out.println("Limite superiore day errato"); // VVXV ritorna misurazioni dopo il giorno iniziale e fino a tutto il mese finale
+            System.out.println("Limite superiore day errato"); //ritorna le misurazioni dopo il giorno iniziale e fino a tutto il mese finale
 
             for (Misurazioni i: obj_list()){
 
@@ -216,8 +242,8 @@ public class Functions {
 
             System.out.println("Limite superiore month errato"); //ritorna le misurazioni a partire dal limite inferiore fino alla fine dell'anno
 
-            if (param_day2 < 1 || param_day2 > 31) System.out.println("Limite superiore giorno errato");  //VVXX
-            if (param_day2 >= 1 && param_day2 <= 31)  System.out.println("Limite superiore giorno giusto"); // VVVX
+            if (param_day2 < 1 || param_day2 > 31) System.out.println("Limite superiore giorno errato");  //
+            if (param_day2 >= 1 && param_day2 <= 31)  System.out.println("Limite superiore giorno giusto"); //
 
             for (Misurazioni i: obj_list()){
 
@@ -234,7 +260,7 @@ public class Functions {
 
             if ((param_month1 >= 1 && param_month1 <= 12) && (param_month2 < 1 || param_month2 > 12 )){
 
-                System.out.println("Unico parametro giusto month1"); // XVXX ritorna le misurazioni a partire da month1
+                System.out.println("Unico parametro giusto month1"); //ritorna le misurazioni a partire da month1
 
                 for (Misurazioni i: obj_list()){
 
@@ -248,7 +274,7 @@ public class Functions {
 
             else if ((param_month1 < 1 || param_month1 > 12) && (param_month2 >=1 && param_month2 <= 12)) {
 
-                System.out.println("Unico parametro giusto month2"); // XXXV ritorna le misurazioni dal primo giorno dell'anno fino al secondo mese incluso
+                System.out.println("Unico parametro giusto month2"); //ritorna le misurazioni dal primo giorno dell'anno fino al secondo mese incluso
 
                 for (Misurazioni i: obj_list()){
 
@@ -262,7 +288,7 @@ public class Functions {
 
             else { //if ((param_month1 >=1 && param_month1 <=12) && (param_month2 >= 1 && param_month2 <= 12)) {
 
-                System.out.println("Entrambi i mesi sono giusti"); //XVXV ritorno le misurazioni del primo mese e fino a tutto il mese finale
+                System.out.println("Entrambi i mesi sono giusti"); //ritorn le misurazioni del primo mese e fino a tutto il mese finale
 
                 for (Misurazioni i: obj_list()) {
 
@@ -278,7 +304,7 @@ public class Functions {
 
         else if ((param_day1 < 1 || param_day1 > 31) && (param_month1>= 1 && param_month1<= 12) && (param_month2 < 1 || param_month2 > 12) && (param_day2 >=1 && param_day2 <= 31 )) {
 
-                System.out.println("Day1 e Month2 sono errati"); // XVVX ritorno le misurazioni del primo mese e fino alla fine dell'anno
+                System.out.println("Day1 e Month2 sono errati"); //ritorna le misurazioni del primo mese e fino alla fine dell'anno
 
                 for (Misurazioni i: obj_list()) {
 
@@ -295,7 +321,7 @@ public class Functions {
 
         else if ((param_day1 >= 1 && param_day1 <= 31) && (param_month1 < 1 || param_month1 > 12) && (param_month2 >= 1 && param_month2 <= 12) && (param_day2 < 1 || param_day2 > 31 )) {
 
-            System.out.println("Month1 e Day2 sono errati"); // VXXV ritorno le misurazioni dal primo giorno dell'anno e fino al secondo mese
+            System.out.println("Month1 e Day2 sono errati"); // ritorna le misurazioni dal primo giorno dell'anno e fino al secondo mese
 
             for (Misurazioni i: obj_list()) {
 
@@ -307,8 +333,6 @@ public class Functions {
 
             }
         }
-
-
 
         else if ((param_day1 > param_day2 && param_month1 == param_month2) || (param_month1 > param_month2)) {
 
@@ -332,15 +356,28 @@ public class Functions {
         return data;
     }
 
+    /**
+     * Stampa la lista di tutti gli oggetti di tipo Misurazioni, filtrati per un valore minimo e massimo di cpc e dmps, gestendo eventuali parametri errati
+     * @param param_cpc_min limite inferiore cpc
+     * @param param_cpc_max limite superiore cpc
+     * @param param_dmps_min limite inferiore dmps
+     * @param param_dmps_max limite superiore dmps
+     * @return data
+     */
     public static ArrayList<Misurazioni> cpc_dmps_filter (double param_cpc_min, double param_cpc_max, double param_dmps_min, double param_dmps_max) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        if(((param_cpc_max < 0 && param_cpc_min >= 0) || (param_cpc_min < 0 && param_cpc_max >= 0) || (param_cpc_min < 0 && param_cpc_max < 0))  && (param_dmps_min >= 0 && param_dmps_max >= 0 && param_dmps_min < param_dmps_max)) {
+        if ((param_cpc_min < 0 && param_cpc_max < 0) && (param_dmps_min < 0 && param_dmps_max < 0)) {
+
+            System.out.println("Parametri tutti errati");
+        }
+
+        else if(((param_cpc_max < 0 && param_cpc_min >= 0) || (param_cpc_min < 0 && param_cpc_max >= 0) || (param_cpc_min < 0 && param_cpc_max < 0))  && (param_dmps_min >= 0 && param_dmps_max >= 0 && param_dmps_min < param_dmps_max)) {
 
             if (param_cpc_max < 0 && param_cpc_min >= 0) {
 
-                System.out.println("Parametro max cpc errato"); // ritorno le misurazioni senza considerare il cpc massimo
+                System.out.println("Parametro max cpc errato"); // ritorna le misurazioni senza considerare il cpc massimo
 
                 for (Misurazioni i : obj_list()) {
 
@@ -354,7 +391,7 @@ public class Functions {
 
             if (param_cpc_min < 0 && param_cpc_max >= 0) {
 
-                System.out.println("Parametro min cpc errato"); // ritorno le misurazioni senza considerare il cpc minimo
+                System.out.println("Parametro min cpc errato"); // ritorna le misurazioni senza considerare il cpc minimo
 
                 for (Misurazioni i : obj_list()) {
 
@@ -367,7 +404,7 @@ public class Functions {
 
             if (param_cpc_min < 0 && param_cpc_max < 0) {
 
-                System.out.println("Parametro cpc errato"); //ritorno le misurazioni senza considerare il cpc
+                System.out.println("Parametro cpc errato"); //ritorna le misurazioni senza considerare il cpc
 
                 for (Misurazioni i : obj_list()) {
 
@@ -383,7 +420,7 @@ public class Functions {
 
             if (param_dmps_min < 0 && param_dmps_max >= 0) {
 
-                System.out.println("Parametro min dmps errato"); // ritorno le misurazioni senza considerare il dmps minimo
+                System.out.println("Parametro min dmps errato"); // ritorna le misurazioni senza considerare il dmps minimo
 
                 for (Misurazioni i : obj_list()) {
 
@@ -396,7 +433,7 @@ public class Functions {
 
             if (param_dmps_max < 0 && param_dmps_min >= 0) {
 
-                System.out.println("Parametro max dmps errato"); // ritorno le misurazioni senza considerare il dmps massimo
+                System.out.println("Parametro max dmps errato"); // ritorna le misurazioni senza considerare il dmps massimo
 
                 for (Misurazioni i : obj_list()) {
 
@@ -410,7 +447,7 @@ public class Functions {
 
             if (param_dmps_min < 0 && param_dmps_max < 0) {
 
-                System.out.println("Parametro dmps errato"); //ritorno le misurazioni senza considerare il dmps
+                System.out.println("Parametro dmps errato"); //ritorna le misurazioni senza considerare il dmps
 
                 for (Misurazioni i : obj_list()) {
 
@@ -425,7 +462,7 @@ public class Functions {
 
         else if((param_cpc_max < param_cpc_min) && (param_dmps_min >= 0 && param_dmps_max >= 0 && param_dmps_min < param_dmps_max)) {
 
-            System.out.println("Max < min in cpc"); //ritorno le misurazioni senza considerare cpc
+            System.out.println("Max < min in cpc"); //ritorna le misurazioni senza considerare cpc
 
             for (Misurazioni i : obj_list()) {
 
@@ -439,7 +476,7 @@ public class Functions {
 
         else if((param_dmps_max < param_dmps_min) && (param_cpc_min >= 0 && param_cpc_max >= 0 && param_cpc_min < param_cpc_max)) {
 
-            System.out.println("Max < min in dmps"); //ritorno le misurazioni senza considerare dmps
+            System.out.println("Max < min in dmps"); //ritorna le misurazioni senza considerare dmps
 
             for (Misurazioni i : obj_list()) {
 
@@ -453,7 +490,7 @@ public class Functions {
 
         else if ((param_cpc_min < 0 && param_cpc_max >= 0) && (param_dmps_min < 0 && param_dmps_max >= 0)) {
 
-            System.out.println("Errati entrambi i valori minimi"); //ritorno le misurazioni senza considerare i valori minimi
+            System.out.println("Errati entrambi i valori minimi"); //ritorna le misurazioni senza considerare i valori minimi
 
             for (Misurazioni i : obj_list()) {
 
@@ -467,7 +504,7 @@ public class Functions {
 
         else if ((param_cpc_min >= 0 && param_cpc_max < 0) && (param_dmps_min >= 0 && param_dmps_max < 0)) {
 
-            System.out.println("Errati entrambi i valori massimi"); //ritorno le misurazioni senza considerare i valori massimi
+            System.out.println("Errati entrambi i valori massimi"); //ritorna le misurazioni senza considerare i valori massimi
 
             for (Misurazioni i : obj_list()) {
 
@@ -481,7 +518,7 @@ public class Functions {
 
         else if ((param_cpc_min < 0 && param_cpc_max < 0) && (param_dmps_min < 0 && param_dmps_max >= 0)) {
 
-            System.out.println("Solo dmps max corretto"); //ritorno le misurazioni minori di dmps_max
+            System.out.println("Solo dmps max corretto"); //ritorna le misurazioni minori di dmps_max
 
             for (Misurazioni i : obj_list()) {
 
@@ -495,7 +532,7 @@ public class Functions {
 
         else if ((param_cpc_min < 0 && param_cpc_max < 0) && (param_dmps_min >= 0 && param_dmps_max < 0)) {
 
-            System.out.println("Solo dmps min corretto"); //ritorno le misurazioni maggiori di dmps_min
+            System.out.println("Solo dmps min corretto"); //ritorna le misurazioni maggiori di dmps_min
 
             for (Misurazioni i : obj_list()) {
 
@@ -511,7 +548,7 @@ public class Functions {
 
             if (param_dmps_min < 0) {
 
-                System.out.println("Solo cpc_max corretto"); //ritorno le misurazioni minori di cpc_max
+                System.out.println("Solo cpc_max corretto"); //ritorna le misurazioni minori di cpc_max
 
                 for (Misurazioni i : obj_list()) {
 
@@ -524,7 +561,7 @@ public class Functions {
 
             else {
 
-                System.out.println("cpc_max e dmps_min corretti"); //ritorno le misurazioni minori di cpc_max e maggiori di dmps_min
+                System.out.println("cpc_max e dmps_min corretti"); //ritorna le misurazioni minori di cpc_max e maggiori di dmps_min
 
                 for (Misurazioni i : obj_list()) {
 
@@ -541,7 +578,7 @@ public class Functions {
 
             if (param_dmps_max < 0) {
 
-                System.out.println("Solo cpc_min corretto"); //ritorno le misurazioni maggiori di cpc_min
+                System.out.println("Solo cpc_min corretto"); //ritorna le misurazioni maggiori di cpc_min
 
                 for (Misurazioni i : obj_list()) {
 
@@ -554,7 +591,7 @@ public class Functions {
 
             else {
 
-                System.out.println("Solo cpc_min e dmps_max corretti"); //ritorno le misurazioni maggiori di cpc_min e minori di dmps_max
+                System.out.println("Solo cpc_min e dmps_max corretti"); //ritorna le misurazioni maggiori di cpc_min e minori di dmps_max
 
                 for (Misurazioni i : obj_list()) {
 
