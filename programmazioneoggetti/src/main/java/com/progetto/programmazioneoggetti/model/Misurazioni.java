@@ -49,25 +49,10 @@ public class Misurazioni implements Serializable {
         this.second = Double.parseDouble(hms[2]);
     }
 
-    public Misurazioni(double dmps, double cpc, String times, String date) {
-
-        this.DMPS = dmps;
-        this.CPC = cpc;
-
-        String[] dmy = date.split("-");
-        this.day = Integer.parseInt(dmy[0]);
-        this.month = Integer.parseInt(dmy[1]);
-        this.year = Integer.parseInt(dmy[2]);
-
-        String[] hms = times.split(":");
-        this.hour = Integer.parseInt(hms[0]);
-        this.minute = Integer.parseInt(hms[1]);
-        this.second = Double.parseDouble(hms[2]);
-    }
 
     /**
      * Imposta il DMPS di una certa misurazione.
-     * @param DMPS
+     * @param DMPS Differential mobility particle spectrometer
      */
     public void setDMPS(double DMPS) {
         this.DMPS = DMPS;
@@ -75,7 +60,7 @@ public class Misurazioni implements Serializable {
 
     /**
      * Imposta il CPC di una certa misurazione.
-     * @param CPC
+     * @param CPC Contatore di particelle a condensazione
      */
     public void setCPC(double CPC) {
         this.CPC = CPC;
@@ -91,7 +76,7 @@ public class Misurazioni implements Serializable {
 
     /**
      * Imposta il giorno di una certa data.
-     * @param day
+     * @param day giorno
      */
     public void setDay(int day) {
         this.day = day;
@@ -107,7 +92,7 @@ public class Misurazioni implements Serializable {
 
     /**
      * Imposta il mese di una certa data.
-     * @param month
+     * @param month mese
      */
     public void setMonth(int month) {
         this.month = month;
@@ -123,7 +108,7 @@ public class Misurazioni implements Serializable {
 
     /**
      * Imposta l'anno di una certa data.
-     * @param year
+     * @param year anno
      */
     public void setYear(int year) {
         this.year = year;
@@ -139,7 +124,7 @@ public class Misurazioni implements Serializable {
 
     /**
      * Imposta l'ora di un certo orario.
-     * @param hour
+     * @param hour ora
      */
     public void setHour(int hour) {
         this.hour = hour;
@@ -155,7 +140,7 @@ public class Misurazioni implements Serializable {
 
     /**
      * Imposta i minuti di un certo orario.
-     * @param minute
+     * @param minute minuto
      */
     public void setMinute(int minute) {
         this.minute = minute;
@@ -171,7 +156,7 @@ public class Misurazioni implements Serializable {
 
     /**
      * Imposta i secondi di un certo orario.
-     * @param second
+     * @param second secondi
      */
     public void setSecond(double second) {
         this.second = second;
@@ -193,10 +178,5 @@ public class Misurazioni implements Serializable {
         return CPC;
     }
 
-    public boolean equalmis(Misurazioni c) {
-        if (this.DMPS == c.getDMPS() && this.CPC == c.getCPC()) return true;
-        else return false;
-
-    }
 }
 
