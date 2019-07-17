@@ -7,6 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import com.progetto.programmazioneoggetti.model.Metadati;
 
+/**
+ *
+ * @author Sandro Materazzi
+ * @author Francesco Gaudeni
+ */
+
 @RestController
 public class RController {
 
@@ -40,7 +46,7 @@ public class RController {
     public Stats date_hour_stats(@RequestParam(name = "day", defaultValue = "-1") int param_day,
                                  @RequestParam(name = "month", defaultValue = "-1") int param_month,
                                  @RequestParam(name = "hour", defaultValue = "-1") int param_hour) throws Exception {
-
+//if ((param_day1 <  || param_day > 31) && (param_month < 1 || param_month > 12) && (param_hour < 0 || param_hour > 24) return -1;
         return new Stats(Functions.obj_date_hour(param_day, param_month, param_hour));
     }
 
@@ -58,7 +64,7 @@ public class RController {
                                    @RequestParam(name = "month", defaultValue = "-1") int param_month1,
                                    @RequestParam(name = "day2", defaultValue = "-1") int param_day2,
                                    @RequestParam(name = "month2", defaultValue = "-1") int param_month2) throws Exception {
-
+//if ((param_day1 < 1 || param_day1 > 31) && (param_day2 < 1 || param_day2 > 31) && (param_month1 < 1 || param_month1 > 12) && (param_month2 < 1 || param_month2 > 12)) return -1;
         return new Stats(Functions.date_filter(param_day1,param_month1, param_day2, param_month2));
     }
 
