@@ -101,32 +101,32 @@ public class Functions {
 
         if((param_day >= 1 && param_day <= 31) && (param_month < 1 || param_month > 12 ) && (param_hour >= 0 && param_hour < 24)){
             System.out.println("Parametro di ricerca del mese sbagliato");
-            data = day_hour(param_day, param_hour);
+            data = day_hour(param_day, param_hour);  // ritorno le misurazioni con quel giorno e quell'ora
         }
 
         else if((param_day < 1 || param_day > 31 ) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)){
             System.out.println("Parametri di ricerca del giorno sbagliato");
-            data = month_hour(param_month, param_hour);
+            data = month_hour(param_month, param_hour); // ritorno le misurazioni con quel mese e quell'ora
         }
 
         else if ((param_day>=1 && param_day <=31) && (param_month >= 1 && param_month <= 12) && (param_hour < 0 || param_hour > 24)) {
             System.out.println("Parametro di ricerca dell'ora sbagliato");
-            data = date(param_day, param_month);
+            data = date(param_day, param_month);  //ritorno le misurazioni con quel giorno e quel mese
 
         }
         else if ((param_day < 1 || param_day > 31) && (param_month < 1 || param_month > 12) && (param_hour >= 0 && param_hour < 24)){
             System.out.println("Parametri di ricerca del giorno e del mese sbagliati");
-            data = hour(param_hour);
+            data = hour(param_hour);  //ritorno tutte le misurazioni con quell'ora
         }
 
         else if((param_day < 1 || param_day > 31) && (param_month >= 1 && param_month <= 12) && (param_hour < 0 || param_hour > 24)){
             System.out.println("Parametri di ricerca del giorno e dell'ora sbagliati");
-            data = month(param_month);
+            data = month(param_month);  // ritorno tutte le misurazioni con quel mese
         }
 
         else if((param_day >= 1 && param_day <= 31) && (param_month < 1 || param_month > 12) && (param_hour < 0 || param_hour > 24)){
             System.out.println("Parametri di ricerca del mese e dell'ora sbagliati");
-            data = day(param_day);
+            data = day(param_day); // ritorno le misurazioni con quel giorno
         }
 
         else if ((param_day >= 1 && param_day <= 31) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)){
@@ -135,7 +135,7 @@ public class Functions {
         }
         else {
 
-            System.out.println("Parametri di ricerca tutti sbagliati");
+            System.out.println("Parametri di ricerca tutti sbagliati, ripetere la ricerca");
         }
 
         return data;
@@ -158,11 +158,9 @@ public class Functions {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-
-
         if ((param_month2 < 1 || param_month2 > 12) && (param_month1 < 1 || param_month1 > 12)) {
 
-            System.out.println("Impossibile ricerca alternativa"); //.X.X
+            System.out.println("Impossibile ricerca alternativa, entrambi i mesi sono errati"); //.X.X
 
         }
 
@@ -244,7 +242,7 @@ public class Functions {
 
             }
 
-            else if (( param_month1 < 1 || param_month1 >12) && (param_month2 >=1 && param_month2 <= 12 )) {
+            else if ((param_month1 < 1 || param_month1 > 12) && (param_month2 >=1 && param_month2 <= 12)) {
 
                 System.out.println("Unico parametro giusto month2"); // XXXV ritorna le misurazioni dal primo giorno dell'anno fino al secondo mese incluso
 
@@ -258,7 +256,7 @@ public class Functions {
 
             }
 
-            else if ((param_month1 >=1 && param_month1 <=12) && (param_month2 >= 1 && param_month2 <= 12)) {
+            else { //if ((param_month1 >=1 && param_month1 <=12) && (param_month2 >= 1 && param_month2 <= 12)) {
 
                 System.out.println("Entrambi i mesi sono giusti"); //XVXV ritorno le misurazioni del primo mese e fino a tutto il mese finale
 
@@ -314,6 +312,8 @@ public class Functions {
         }
 
         else {
+
+            System.out.println("Parametri tutti corretti");
 
             for(Misurazioni i : obj_list()){
 
