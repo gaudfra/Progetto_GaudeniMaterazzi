@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import com.progetto.programmazioneoggetti.model.Metadati;
 
+import javax.validation.constraints.Null;
+
 /**
  *
  * @author Sandro Materazzi
@@ -43,10 +45,23 @@ public class RController {
     }
 
     @RequestMapping( value = "/date_hour_stats", method = RequestMethod.GET, produces = "application/json")
-    public Stats date_hour_stats(@RequestParam(name = "day", defaultValue = "-1") int param_day,
+    public ArrayList date_hour_stats(@RequestParam(name = "day", defaultValue = "-1") int param_day,
                                  @RequestParam(name = "month", defaultValue = "-1") int param_month,
                                  @RequestParam(name = "hour", defaultValue = "-1") int param_hour) throws Exception {
-        return new Stats(Functions.obj_date_hour(param_day, param_month, param_hour));
+
+
+        if ((param_day < 1 || param_day > 31) && (param_month < 1 || param_month > 12) && (param_hour < 0 || param_hour > 24)) {
+
+            System.out.println("Parametri tutti errati, impossibile calcolare statistiche");
+
+            return new ArrayList();
+        }
+        else {
+
+            ArrayList<Stats> lista = new ArrayList<>();
+            lista.add(new Stats(Functions.obj_list()));
+            return lista;
+        }
     }
 
     @RequestMapping( value = "/date_filter", method = RequestMethod.GET, produces = "application/json")
@@ -59,11 +74,23 @@ public class RController {
     }
 
     @RequestMapping( value = "/date_filter_stats", method = RequestMethod.GET, produces = "application/json")
-    public Stats date_filter_stats(@RequestParam(name = "day_min", defaultValue = "-1") int param_day1,
+    public ArrayList date_filter_stats(@RequestParam(name = "day_min", defaultValue = "-1") int param_day1,
                                    @RequestParam(name = "month_min", defaultValue = "-1") int param_month1,
                                    @RequestParam(name = "day_max", defaultValue = "-1") int param_day2,
                                    @RequestParam(name = "month_max", defaultValue = "-1") int param_month2) throws Exception {
-        return new Stats(Functions.date_filter(param_day1,param_month1, param_day2, param_month2));
+
+        if ((param_day1 < 1 || param_day1 > 31) && (param_month1 < 1 || param_month1 > 12) && (param_day2 < 1 || param_day2 > 31) && (param_month2 < 1 || param_month2 > 12)) {
+
+            System.out.println("Parametri tutti errati, impossibile calcolare statistiche");
+
+            return new ArrayList();
+        }
+        else{
+
+            ArrayList<Stats> lista = new ArrayList<>();
+            lista.add( new Stats(Functions.date_filter(param_day1,param_month1, param_day2, param_month2)));
+            return lista;
+        }
     }
 
     @RequestMapping( value = "/values_filter", method = RequestMethod.GET, produces = "application/json")

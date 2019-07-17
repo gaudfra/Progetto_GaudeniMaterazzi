@@ -34,30 +34,36 @@ public class Functions {
         ArrayList<Misurazioni> lista_oggetti = new ArrayList<>();
         try {
 
+            // Questa parte apre l'url e legge il json
+
             URLConnection openConnection = new URL("http://data.europa.eu/euodp/data/api/3/action/package_show?id=jrc-abcis-ap-dmpspc-2016").openConnection();
             openConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
             InputStream in = openConnection.getInputStream();
 
             String data = "";
             String line = "";
+
             try {
                 InputStreamReader inR = new InputStreamReader(in);
                 BufferedReader buf = new BufferedReader(inR);
 
                 while ((line = buf.readLine()) != null) {
+
                     data += line;
-                    System.out.println(line);
                 }
 
             } finally {
                 in.close();
             }
 
+            /* Una volta letto il json cerca nell'oggetto "results" l'oggetto "resources"
+               per trovare l'url il cui formato contiene la prola CSV */
+
             JSONObject obj = (JSONObject) JSONValue.parseWithException(data);
             JSONObject objI = (JSONObject) (obj.get("result"));
             JSONArray objA = (JSONArray) (objI.get("resources"));
 
-            for (Object o : objA) {
+            for (Object o : objA) { // scorre "resources" finché ci sono oggetti dentro
                 if (o instanceof JSONObject) {
                     JSONObject o1 = (JSONObject) o;
                     String format = (String) o1.get("format");
@@ -68,21 +74,22 @@ public class Functions {
                     if (format.contains("CSV")) {
                         try {
 
+                            // Questa parte legge il .csv dal link
                             URLConnection openConnection2 = new URL(urlA).openConnection();
                             BufferedReader in2 = new BufferedReader(new InputStreamReader(openConnection2.getInputStream()));
-                            in2.readLine(); // salto prima riga
+                            in2.readLine(); // non salvo la prima riga poiché contiene solo il titolo dei valori
 
                             String inputLine;
                             while ((inputLine = in2.readLine()) != null) {
 
                                 try {
 
-                                    String[] SeparaData = inputLine.split(" ");
-                                    String[] Separatempo = SeparaData[1].split(",");
-                                    Misurazioni misurazione = new Misurazioni(Separatempo[0], SeparaData[0], Separatempo[1], Separatempo[2]); // passare parametri
+                                    String[] SeparaData = inputLine.split(" "); // divide la riga e la salva in una string ogni volta che incontra uno spazio
+                                    String[] Separatempo = SeparaData[1].split(","); // divide l'elemento dell'array salvandolo in un ulteriore array ogni volta che incontra una virgola
+                                    Misurazioni misurazione = new Misurazioni(Separatempo[0], SeparaData[0], Separatempo[1], Separatempo[2]); // passaggio parametri al costruttore della classe Misurazioni
                                     if (misurazione.getDMPS() >= 0 && misurazione.getCPC() >= 0){
-                                        lista_oggetti.add(misurazione);
-                                    }
+                                        lista_oggetti.add(misurazione); // si aggiungono alla lista solamente quelle misurazioni che non diano valori errati
+                                    }                                   // (siccome non sappiamo la natura delle misurazioni si preferisce escludere entrambi i valori se anche uno solo fosse errato)
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

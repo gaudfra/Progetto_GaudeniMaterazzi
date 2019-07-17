@@ -59,6 +59,10 @@ public class Metadati {
         this.type = type;
     }
 
+    public String toString(){
+
+        return "Metadata [alias=" + alias + ", type=" + type + "]";
+    }
 }
 
 
