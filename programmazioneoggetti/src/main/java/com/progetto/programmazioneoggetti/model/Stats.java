@@ -7,6 +7,12 @@ import java.util.ArrayList;
 
 import static java.lang.Math.sqrt;
 
+/**
+ *
+ * @author Sandro Materazzi
+ * @author Francesco Gaudeni
+ */
+
 public class Stats implements Serializable {
 
     double avg_dmps;

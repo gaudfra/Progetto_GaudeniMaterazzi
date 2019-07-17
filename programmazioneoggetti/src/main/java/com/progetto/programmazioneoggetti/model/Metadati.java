@@ -1,5 +1,11 @@
 package com.progetto.programmazioneoggetti.model;
 
+/**
+ *
+ * @author Sandro Materazzi
+ * @author Francesco Gaudeni
+ */
+
 public class Metadati {
 
     private String alias;

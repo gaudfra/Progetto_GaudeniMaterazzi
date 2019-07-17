@@ -7,6 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import com.progetto.programmazioneoggetti.model.Metadati;
 
+/**
+ *
+ * @author Sandro Materazzi
+ * @author Francesco Gaudeni
+ */
+
 @RestController
 public class RController {
 

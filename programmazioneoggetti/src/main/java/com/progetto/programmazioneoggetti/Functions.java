@@ -15,7 +15,11 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.lang.reflect.Field;
 
-
+/**
+ *
+ * @author Sandro Materazzi
+ * @author Francesco Gaudeni
+ */
 
 public class Functions {
 
@@ -69,7 +73,7 @@ public class Functions {
 
                                     String[] SeparaData = inputLine.split(" ");
                                     String[] Separatempo = SeparaData[1].split(",");
-                                    Misurazioni misurazione = new Misurazioni(Separatempo[0], SeparaData[0], Separatempo[1], Separatempo[2]); // passare parametri)
+                                    Misurazioni misurazione = new Misurazioni(Separatempo[0], SeparaData[0], Separatempo[1], Separatempo[2]); // passare parametri
                                     if (misurazione.getDMPS() >= 0 && misurazione.getCPC() >= 0){
                                         lista_oggetti.add(misurazione);
                                     }
