@@ -16,16 +16,22 @@ Attraverso rotte distinte si possono eseguire diverse operazioni sugli oggetti M
 <img width="904" alt="meta" src="https://user-images.githubusercontent.com/52038801/61414918-927fa600-a8ef-11e9-9829-aacb60762572.png">
 
 
+
+
 - tramite /stats vengono restituite le statistiche su tutti i dati
 <img width="904" alt="stats" src="https://user-images.githubusercontent.com/52038801/61414996-c955bc00-a8ef-11e9-9a07-3b276309a331.png">
+
+
 
 
 
 - tramite /date_hour vengono restituiti tutti i dati con quella specifica data, gestendo eventuali eccezioni
 <img width="904" alt="datehour_ok" src="https://user-images.githubusercontent.com/52038801/61415012-d96d9b80-a8ef-11e9-8fa4-28ee9ef0fb51.png">
 
-  Esempio con eccezione:inserendo solo l'ora vengono ritornate tutte le misurazioni fatte in quella spcifica ora 
+  Esempio con eccezione: inserendo solo l'ora vengono ritornate tutte le misurazioni fatte in quella specifica ora 
  <img width="904" alt="datehour_soloora" src="https://user-images.githubusercontent.com/52038801/61415041-ebe7d500-a8ef-11e9-90b9-1bb0d5f3dbc4.png">
+
+
 
 
 
@@ -37,11 +43,15 @@ Attraverso rotte distinte si possono eseguire diverse operazioni sugli oggetti M
 
 
 
+
+
 - tramite /date_filter vengono restituiti i dati compresi tra due specifiche date, gestendo eventuali eccezioni
 <img width="904" alt="datefilter" src="https://user-images.githubusercontent.com/52038801/61415128-36695180-a8f0-11e9-96c1-ecd3cdd39e31.png">
 
   Esempio con eccezione: tralasciando solo il giorno minimo, vengono ritornate le misurazioni a partire dal primo giorno di quel mese
   <img width="904" alt="datefilter_conerrore" src="https://user-images.githubusercontent.com/52038801/61415155-44b76d80-a8f0-11e9-8c49-3e70399cfaf0.png">
+
+
 
 
 
@@ -54,6 +64,8 @@ eccezioni
 
 
 
+
+
 - tramite /values_filter vengono restituiti i dati con misurazioni comprese tra due valori limite di cpc e dmps
 <img width="904" alt="valuesfilter" src="https://user-images.githubusercontent.com/52038801/61415248-72041b80-a8f0-11e9-9164-18f4d683a319.png">
 
@@ -61,7 +73,7 @@ eccezioni
   Esempio con eccezione: tralasciando il cpc massimo vengono restituite le misurazioni a partire da quelle con cpc minimo richiesto
   <img width="904" alt="valuesfilter_conerrore" src="https://user-images.githubusercontent.com/52038801/61415269-81836480-a8f0-11e9-8fe7-698c7dc353de.png">
 
-##### NB: Le eccezioni presentate solo sono una parte di quelle implementate
+##### NB: Le eccezioni presentate sono solo una parte di quelle implementate
 
 
 ## Diagrammi UML
