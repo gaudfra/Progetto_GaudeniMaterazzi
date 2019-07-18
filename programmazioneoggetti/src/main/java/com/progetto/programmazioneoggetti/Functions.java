@@ -16,20 +16,22 @@ import java.util.ArrayList;
 import java.lang.reflect.Field;
 
 /**
- *
  * @author Sandro Materazzi
  * @author Francesco Gaudeni
  */
 
 public class Functions {
 
+    private static ArrayList<Misurazioni> csv;
+
     //Metodi
 
     /**
      * Stampa la lista di tutti gli oggetti di tipo Misurazioni.
+     *
      * @return lista_oggetti
      */
-    public static ArrayList<Misurazioni> obj_list () throws Exception {
+    public static ArrayList<Misurazioni> obj_list() throws Exception {
 
         ArrayList<Misurazioni> lista_oggetti = new ArrayList<>();
         try {
@@ -87,7 +89,7 @@ public class Functions {
                                     String[] SeparaData = inputLine.split(" "); // divide la riga e la salva in una string ogni volta che incontra uno spazio
                                     String[] Separatempo = SeparaData[1].split(","); // divide l'elemento dell'array salvandolo in un ulteriore array ogni volta che incontra una virgola
                                     Misurazioni misurazione = new Misurazioni(Separatempo[0], SeparaData[0], Separatempo[1], Separatempo[2]); // passaggio parametri al costruttore della classe Misurazioni
-                                    if (misurazione.getDMPS() >= 0 && misurazione.getCPC() >= 0){
+                                    if (misurazione.getDMPS() >= 0 && misurazione.getCPC() >= 0) {
                                         lista_oggetti.add(misurazione); // si aggiungono alla lista solamente quelle misurazioni che non diano valori errati
                                     }                                   // (siccome non sappiamo la natura delle misurazioni si preferisce escludere entrambi i valori se anche uno solo fosse errato)
                                 } catch (Exception e) {
@@ -109,55 +111,46 @@ public class Functions {
             e.printStackTrace();
         }
 
+        csv = lista_oggetti;
+
         return lista_oggetti;
     }
 
     /**
      * Stampa la lista di tutti gli oggetti di tipo Misurazioni, filtrati secondo una certa data e ora, gestendo eventuali parametri errati.
-     * @param param_day giorno richiesto
+     *
+     * @param param_day   giorno richiesto
      * @param param_month mese richiesto
-     * @param param_hour ora richiesta
+     * @param param_hour  ora richiesta
      * @return data
      */
-    public static ArrayList<Misurazioni> obj_date_hour (int param_day, int param_month, int param_hour) throws Exception {
+    public static ArrayList<Misurazioni> obj_date_hour(int param_day, int param_month, int param_hour) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        if((param_day >= 1 && param_day <= 31) && (param_month < 1 || param_month > 12 ) && (param_hour >= 0 && param_hour < 24)){
+        if ((param_day >= 1 && param_day <= 31) && (param_month < 1 || param_month > 12) && (param_hour >= 0 && param_hour < 24)) {
             System.out.println("Parametro di ricerca del mese sbagliato");
             data = day_hour(param_day, param_hour);  // ritorno le misurazioni con quel giorno e quell'ora
-        }
-
-        else if((param_day < 1 || param_day > 31 ) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)){
+        } else if ((param_day < 1 || param_day > 31) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)) {
             System.out.println("Parametri di ricerca del giorno sbagliato");
             data = month_hour(param_month, param_hour); // ritorno le misurazioni con quel mese e quell'ora
-        }
-
-        else if ((param_day>=1 && param_day <=31) && (param_month >= 1 && param_month <= 12) && (param_hour < 0 || param_hour > 24)) {
+        } else if ((param_day >= 1 && param_day <= 31) && (param_month >= 1 && param_month <= 12) && (param_hour < 0 || param_hour > 24)) {
             System.out.println("Parametro di ricerca dell'ora sbagliato");
             data = date(param_day, param_month);  //ritorno le misurazioni con quel giorno e quel mese
 
-        }
-        else if ((param_day < 1 || param_day > 31) && (param_month < 1 || param_month > 12) && (param_hour >= 0 && param_hour < 24)){
+        } else if ((param_day < 1 || param_day > 31) && (param_month < 1 || param_month > 12) && (param_hour >= 0 && param_hour < 24)) {
             System.out.println("Parametri di ricerca del giorno e del mese sbagliati");
             data = hour(param_hour);  //ritorno tutte le misurazioni con quell'ora
-        }
-
-        else if((param_day < 1 || param_day > 31) && (param_month >= 1 && param_month <= 12) && (param_hour < 0 || param_hour > 24)){
+        } else if ((param_day < 1 || param_day > 31) && (param_month >= 1 && param_month <= 12) && (param_hour < 0 || param_hour > 24)) {
             System.out.println("Parametri di ricerca del giorno e dell'ora sbagliati");
             data = month(param_month);  // ritorno tutte le misurazioni con quel mese
-        }
-
-        else if((param_day >= 1 && param_day <= 31) && (param_month < 1 || param_month > 12) && (param_hour < 0 || param_hour > 24)){
+        } else if ((param_day >= 1 && param_day <= 31) && (param_month < 1 || param_month > 12) && (param_hour < 0 || param_hour > 24)) {
             System.out.println("Parametri di ricerca del mese e dell'ora sbagliati");
             data = day(param_day); // ritorno le misurazioni con quel giorno
-        }
-
-        else if ((param_day >= 1 && param_day <= 31) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)){
+        } else if ((param_day >= 1 && param_day <= 31) && (param_month >= 1 && param_month <= 12) && (param_hour >= 0 && param_hour < 24)) {
             System.out.println("Parametri di ricerca tutti giusti");
             data = date_hour(param_day, param_month, param_hour); //ritorno tutte le misurazioni con quella specifica data e ora
-        }
-        else {
+        } else {
 
             System.out.println("Parametri di ricerca tutti sbagliati, ripetere la ricerca");
         }
@@ -168,6 +161,7 @@ public class Functions {
 
     /**
      * Stampa la lista di tutti i metadati.
+     *
      * @return meta
      */
     public static ArrayList<Metadati> obj_meta() {
@@ -175,23 +169,24 @@ public class Functions {
         ArrayList<Metadati> meta = new ArrayList<>();
         int i = 0;
 
-        for (Field field: Misurazioni.class.getDeclaredFields()) {
+        for (Field field : Misurazioni.class.getDeclaredFields()) {
 
-           meta.add(new Metadati(field.getName(), field.getType().toString()));
-           i++;
+            meta.add(new Metadati(field.getName(), field.getType().toString()));
+            i++;
         }
         return meta;
-}
+    }
 
     /**
      * Stampa la lista di tutti gli oggetti di tipo Misurazioni, compresi tra una data iniziale ed una finale, gestendo eventuali parametri errati
-     * @param param_day1 limite inferiore giorno
-     * @param param_month1  limite inferiore mese
-     * @param param_day2 limite superiore giorno
+     *
+     * @param param_day1   limite inferiore giorno
+     * @param param_month1 limite inferiore mese
+     * @param param_day2   limite superiore giorno
      * @param param_month2 limite superiore mese
      * @return data
      */
-    public static ArrayList<Misurazioni> date_filter (int param_day1, int param_month1, int param_day2, int param_month2) throws Exception {
+    public static ArrayList<Misurazioni> date_filter(int param_day1, int param_month1, int param_day2, int param_month2) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
@@ -199,138 +194,121 @@ public class Functions {
 
             System.out.println("Impossibile ricerca alternativa, entrambi i mesi sono errati");
 
-        }
-
-        else if ((param_day1 < 1 || param_day1 > 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_day2 >= 1 && param_day2 <= 31) && (param_month2 >= 1 && param_month2 <= 12)) {
+        } else if ((param_day1 < 1 || param_day1 > 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_day2 >= 1 && param_day2 <= 31) && (param_month2 >= 1 && param_month2 <= 12)) {
 
             System.out.println("Solo il limite inferiore day è errato"); //ritorna le misurazioni dal primo mese fino al limite superiore
 
-            for (Misurazioni i: obj_list()){
+            for (Misurazioni i : csv) {
 
-                if ( i.getMonth() >= param_month1 && ((i.getDay() <= param_day2 && i.getMonth() == param_month2) || (i.getDay() >= param_day2 && i.getMonth() < param_month2) || (i.getDay() <= param_day2 && i.getMonth() <= param_month2))){
+                if (i.getMonth() >= param_month1 && ((i.getDay() <= param_day2 && i.getMonth() == param_month2) || (i.getDay() >= param_day2 && i.getMonth() < param_month2) || (i.getDay() <= param_day2 && i.getMonth() <= param_month2))) {
 
                     data.add(i);
                 }
             }
-        }
-
-        else if ((param_month1 < 1 || param_month1 > 12) && (param_day2 >= 1 && param_day2 <= 31) && (param_month2 >= 1 && param_month2 <= 12)) {
+        } else if ((param_month1 < 1 || param_month1 > 12) && (param_day2 >= 1 && param_day2 <= 31) && (param_month2 >= 1 && param_month2 <= 12)) {
 
             System.out.println("Limite inferiore month errato");
 
-            if (param_day1 < 1 || param_day1 > 31 ) System.out.println("Limite inferiore giorno errato"); //ritorna le misurazioni dal primo giorno dell'anno fino al limite superiore
-            if (param_day1 >= 1 && param_day1 <= 31)  System.out.println("Limite inferiore giorno giusto");
+            if (param_day1 < 1 || param_day1 > 31)
+                System.out.println("Limite inferiore giorno errato"); //ritorna le misurazioni dal primo giorno dell'anno fino al limite superiore
+            if (param_day1 >= 1 && param_day1 <= 31) System.out.println("Limite inferiore giorno giusto");
 
 
-            for (Misurazioni i : obj_list()) {
+            for (Misurazioni i : csv) {
 
-                    if ((i.getDay() <= param_day2 && i.getMonth() == param_month2) || (i.getDay() >= param_day2 && i.getMonth() < param_month2) || (i.getDay() <= param_day2 && i.getMonth() <= param_month2)) {
+                if ((i.getDay() <= param_day2 && i.getMonth() == param_month2) || (i.getDay() >= param_day2 && i.getMonth() < param_month2) || (i.getDay() <= param_day2 && i.getMonth() <= param_month2)) {
 
-                        data.add(i);
-                    }
+                    data.add(i);
                 }
+            }
 
-        }
-
-        else if ((param_day1 >= 1 && param_day1 <= 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_day2 < 1 || param_day2 > 31) && (param_month2 >= 1 && param_month2 <= 12)) {
+        } else if ((param_day1 >= 1 && param_day1 <= 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_day2 < 1 || param_day2 > 31) && (param_month2 >= 1 && param_month2 <= 12)) {
 
             System.out.println("Limite superiore day errato"); //ritorna le misurazioni dopo il giorno iniziale e fino a tutto il mese finale
 
-            for (Misurazioni i: obj_list()){
+            for (Misurazioni i : csv) {
 
                 if (((i.getDay() >= param_day1 && i.getMonth() == param_month1) || (i.getDay() <= param_day1 && i.getMonth() > param_month1) || (i.getDay() >= param_day1 && i.getMonth() >= param_month1)) && (i.getMonth() <= param_month2)) {
 
                     data.add(i);
                 }
             }
-        }
-
-        else if ((param_day1 >= 1 && param_day1 <= 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_month2 < 1 || param_month2 > 12)) {
+        } else if ((param_day1 >= 1 && param_day1 <= 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_month2 < 1 || param_month2 > 12)) {
 
             System.out.println("Limite superiore month errato"); //ritorna le misurazioni a partire dal limite inferiore fino alla fine dell'anno
 
             if (param_day2 < 1 || param_day2 > 31) System.out.println("Limite superiore giorno errato");  //
-            if (param_day2 >= 1 && param_day2 <= 31)  System.out.println("Limite superiore giorno giusto"); //
+            if (param_day2 >= 1 && param_day2 <= 31) System.out.println("Limite superiore giorno giusto"); //
 
-            for (Misurazioni i: obj_list()){
+            for (Misurazioni i : csv) {
 
                 if ((i.getDay() >= param_day1 && i.getMonth() == param_month1) || (i.getDay() <= param_day1 && i.getMonth() > param_month1) || (i.getDay() >= param_day1 && i.getMonth() >= param_month1)) {
 
                     data.add(i);
                 }
             }
-        }
-
-        else if ((param_day1 < 1 || param_day1 > 31) && (param_day2 < 1 || param_day2 > 31) ) {
+        } else if ((param_day1 < 1 || param_day1 > 31) && (param_day2 < 1 || param_day2 > 31)) {
 
             System.out.println("Limiti day errati");
 
-            if ((param_month1 >= 1 && param_month1 <= 12) && (param_month2 < 1 || param_month2 > 12 )){
+            if ((param_month1 >= 1 && param_month1 <= 12) && (param_month2 < 1 || param_month2 > 12)) {
 
                 System.out.println("Unico parametro giusto month1"); //ritorna le misurazioni a partire da month1
 
-                for (Misurazioni i: obj_list()){
-
-                    if (i.getMonth() >= param_month1){
-
-                        data.add(i);
-                    }
-                }
-
-            }
-
-            else if ((param_month1 < 1 || param_month1 > 12) && (param_month2 >=1 && param_month2 <= 12)) {
-
-                System.out.println("Unico parametro giusto month2"); //ritorna le misurazioni dal primo giorno dell'anno fino al secondo mese incluso
-
-                for (Misurazioni i: obj_list()){
-
-                    if (i.getMonth() <= param_month2){
-
-                        data.add(i);
-                    }
-                }
-
-            }
-
-            else { //if ((param_month1 >=1 && param_month1 <=12) && (param_month2 >= 1 && param_month2 <= 12)) {
-
-                System.out.println("Entrambi i mesi sono giusti"); //ritorn le misurazioni del primo mese e fino a tutto il mese finale
-
-                for (Misurazioni i: obj_list()) {
-
-                    if (i.getMonth() >= param_month1 && i.getMonth() <= param_month2) {
-
-                    data.add(i);
-
-                    }
-
-                }
-            }
-        }
-
-        else if ((param_day1 < 1 || param_day1 > 31) && (param_month1>= 1 && param_month1<= 12) && (param_month2 < 1 || param_month2 > 12) && (param_day2 >=1 && param_day2 <= 31 )) {
-
-                System.out.println("Day1 e Month2 sono errati"); //ritorna le misurazioni del primo mese e fino alla fine dell'anno
-
-                for (Misurazioni i: obj_list()) {
+                for (Misurazioni i : csv) {
 
                     if (i.getMonth() >= param_month1) {
 
                         data.add(i);
+                    }
+                }
+
+            } else if ((param_month1 < 1 || param_month1 > 12) && (param_month2 >= 1 && param_month2 <= 12)) {
+
+                System.out.println("Unico parametro giusto month2"); //ritorna le misurazioni dal primo giorno dell'anno fino al secondo mese incluso
+
+                for (Misurazioni i : csv) {
+
+                    if (i.getMonth() <= param_month2) {
+
+                        data.add(i);
+                    }
+                }
+
+            } else { //if ((param_month1 >=1 && param_month1 <=12) && (param_month2 >= 1 && param_month2 <= 12)) {
+
+                System.out.println("Entrambi i mesi sono giusti"); //ritorn le misurazioni del primo mese e fino a tutto il mese finale
+
+                for (Misurazioni i : csv) {
+
+                    if (i.getMonth() >= param_month1 && i.getMonth() <= param_month2) {
+
+                        data.add(i);
 
                     }
 
                 }
+            }
+        } else if ((param_day1 < 1 || param_day1 > 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_month2 < 1 || param_month2 > 12) && (param_day2 >= 1 && param_day2 <= 31)) {
+
+            System.out.println("Day1 e Month2 sono errati"); //ritorna le misurazioni del primo mese e fino alla fine dell'anno
+
+            for (Misurazioni i : csv) {
+
+                if (i.getMonth() >= param_month1) {
+
+                    data.add(i);
+
+                }
+
+            }
 
 
-        }
-
-        else if ((param_day1 >= 1 && param_day1 <= 31) && (param_month1 < 1 || param_month1 > 12) && (param_month2 >= 1 && param_month2 <= 12) && (param_day2 < 1 || param_day2 > 31 )) {
+        } else if ((param_day1 >= 1 && param_day1 <= 31) && (param_month1 < 1 || param_month1 > 12) && (param_month2 >= 1 && param_month2 <= 12) && (param_day2 < 1 || param_day2 > 31)) {
 
             System.out.println("Month1 e Day2 sono errati"); // ritorna le misurazioni dal primo giorno dell'anno e fino al secondo mese
 
-            for (Misurazioni i: obj_list()) {
+            for (Misurazioni i : csv) {
 
                 if (i.getMonth() <= param_month2) {
 
@@ -339,21 +317,17 @@ public class Functions {
                 }
 
             }
-        }
-
-        else if ((param_day1 > param_day2 && param_month1 == param_month2) || (param_month1 > param_month2)) {
+        } else if ((param_day1 > param_day2 && param_month1 == param_month2) || (param_month1 > param_month2)) {
 
             System.out.println("Limite inferiore maggiore del limite superiore");
-        }
-
-        else {
+        } else {
 
             System.out.println("Parametri tutti corretti");
 
-            for(Misurazioni i : obj_list()){
+            for (Misurazioni i : csv) {
 
                 if (((i.getDay() >= param_day1 && i.getMonth() == param_month1) || (i.getDay() <= param_day1 && i.getMonth() > param_month1) || (i.getDay() >= param_day1 && i.getMonth() >= param_month1)) &&
-                    ((i.getDay() <= param_day2 && i.getMonth() == param_month2) || (i.getDay() >= param_day2 && i.getMonth() < param_month2) || (i.getDay() <= param_day2 && i.getMonth() <= param_month2))) {
+                        ((i.getDay() <= param_day2 && i.getMonth() == param_month2) || (i.getDay() >= param_day2 && i.getMonth() < param_month2) || (i.getDay() <= param_day2 && i.getMonth() <= param_month2))) {
 
                     data.add(i);
                 }
@@ -365,28 +339,27 @@ public class Functions {
 
     /**
      * Stampa la lista di tutti gli oggetti di tipo Misurazioni, filtrati per un valore minimo e massimo di cpc e dmps, gestendo eventuali parametri errati
-     * @param param_cpc_min limite inferiore cpc
-     * @param param_cpc_max limite superiore cpc
+     *
+     * @param param_cpc_min  limite inferiore cpc
+     * @param param_cpc_max  limite superiore cpc
      * @param param_dmps_min limite inferiore dmps
      * @param param_dmps_max limite superiore dmps
      * @return data
      */
-    public static ArrayList<Misurazioni> cpc_dmps_filter (double param_cpc_min, double param_cpc_max, double param_dmps_min, double param_dmps_max) throws Exception {
+    public static ArrayList<Misurazioni> cpc_dmps_filter(double param_cpc_min, double param_cpc_max, double param_dmps_min, double param_dmps_max) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
         if ((param_cpc_min < 0 && param_cpc_max < 0) && (param_dmps_min < 0 && param_dmps_max < 0)) {
 
             System.out.println("Parametri tutti errati");
-        }
-
-        else if(((param_cpc_max < 0 && param_cpc_min >= 0) || (param_cpc_min < 0 && param_cpc_max >= 0) || (param_cpc_min < 0 && param_cpc_max < 0))  && (param_dmps_min >= 0 && param_dmps_max >= 0 && param_dmps_min < param_dmps_max)) {
+        } else if (((param_cpc_max < 0 && param_cpc_min >= 0) || (param_cpc_min < 0 && param_cpc_max >= 0) || (param_cpc_min < 0 && param_cpc_max < 0)) && (param_dmps_min >= 0 && param_dmps_max >= 0 && param_dmps_min < param_dmps_max)) {
 
             if (param_cpc_max < 0 && param_cpc_min >= 0) {
 
                 System.out.println("Parametro max cpc errato"); // ritorna le misurazioni senza considerare il cpc massimo
 
-                for (Misurazioni i : obj_list()) {
+                for (Misurazioni i : csv) {
 
                     if ((i.getCPC() >= param_cpc_min) && (i.getDMPS() >= param_dmps_min && i.getDMPS() <= param_dmps_max)) {
 
@@ -400,7 +373,7 @@ public class Functions {
 
                 System.out.println("Parametro min cpc errato"); // ritorna le misurazioni senza considerare il cpc minimo
 
-                for (Misurazioni i : obj_list()) {
+                for (Misurazioni i : csv) {
 
                     if ((i.getCPC() <= param_cpc_max) && (i.getDMPS() >= param_dmps_min && i.getDMPS() <= param_dmps_max)) {
 
@@ -413,7 +386,7 @@ public class Functions {
 
                 System.out.println("Parametro cpc errato"); //ritorna le misurazioni senza considerare il cpc
 
-                for (Misurazioni i : obj_list()) {
+                for (Misurazioni i : csv) {
 
                     if (i.getDMPS() >= param_dmps_min && i.getDMPS() <= param_dmps_max) {
 
@@ -421,15 +394,13 @@ public class Functions {
                     }
                 }
             }
-        }
-
-        else if(((param_dmps_min < 0 && param_dmps_max >= 0) || (param_dmps_max < 0 && param_dmps_min >= 0) || (param_dmps_min < 0 && param_dmps_max < 0)) && (param_cpc_min >= 0 && param_cpc_max >= 0 && param_cpc_min < param_cpc_max)) {
+        } else if (((param_dmps_min < 0 && param_dmps_max >= 0) || (param_dmps_max < 0 && param_dmps_min >= 0) || (param_dmps_min < 0 && param_dmps_max < 0)) && (param_cpc_min >= 0 && param_cpc_max >= 0 && param_cpc_min < param_cpc_max)) {
 
             if (param_dmps_min < 0 && param_dmps_max >= 0) {
 
                 System.out.println("Parametro min dmps errato"); // ritorna le misurazioni senza considerare il dmps minimo
 
-                for (Misurazioni i : obj_list()) {
+                for (Misurazioni i : csv) {
 
                     if ((i.getDMPS() <= param_dmps_max) && (i.getCPC() >= param_cpc_min && i.getCPC() <= param_cpc_max)) {
 
@@ -442,7 +413,7 @@ public class Functions {
 
                 System.out.println("Parametro max dmps errato"); // ritorna le misurazioni senza considerare il dmps massimo
 
-                for (Misurazioni i : obj_list()) {
+                for (Misurazioni i : csv) {
 
                     if ((i.getDMPS() >= param_dmps_min) && (i.getCPC() >= param_cpc_min && i.getCPC() <= param_cpc_max)) {
 
@@ -456,22 +427,20 @@ public class Functions {
 
                 System.out.println("Parametro dmps errato"); //ritorna le misurazioni senza considerare il dmps
 
-                for (Misurazioni i : obj_list()) {
+                for (Misurazioni i : csv) {
 
-                    if((i.getCPC() >= param_cpc_min) && (i.getCPC() <= param_cpc_max)) {
+                    if ((i.getCPC() >= param_cpc_min) && (i.getCPC() <= param_cpc_max)) {
 
                         data.add(i);
                     }
                 }
 
             }
-        }
-
-        else if((param_cpc_max < param_cpc_min) && (param_dmps_min >= 0 && param_dmps_max >= 0 && param_dmps_min < param_dmps_max)) {
+        } else if ((param_cpc_max < param_cpc_min) && (param_dmps_min >= 0 && param_dmps_max >= 0 && param_dmps_min < param_dmps_max)) {
 
             System.out.println("Max < min in cpc"); //ritorna le misurazioni senza considerare cpc
 
-            for (Misurazioni i : obj_list()) {
+            for (Misurazioni i : csv) {
 
                 if (i.getDMPS() >= param_dmps_min && i.getDMPS() <= param_dmps_max) {
 
@@ -479,13 +448,11 @@ public class Functions {
                 }
             }
 
-        }
-
-        else if((param_dmps_max < param_dmps_min) && (param_cpc_min >= 0 && param_cpc_max >= 0 && param_cpc_min < param_cpc_max)) {
+        } else if ((param_dmps_max < param_dmps_min) && (param_cpc_min >= 0 && param_cpc_max >= 0 && param_cpc_min < param_cpc_max)) {
 
             System.out.println("Max < min in dmps"); //ritorna le misurazioni senza considerare dmps
 
-            for (Misurazioni i : obj_list()) {
+            for (Misurazioni i : csv) {
 
                 if (i.getCPC() >= param_cpc_min && i.getCPC() <= param_cpc_max) {
 
@@ -493,13 +460,11 @@ public class Functions {
                 }
             }
 
-        }
-
-        else if ((param_cpc_min < 0 && param_cpc_max >= 0) && (param_dmps_min < 0 && param_dmps_max >= 0)) {
+        } else if ((param_cpc_min < 0 && param_cpc_max >= 0) && (param_dmps_min < 0 && param_dmps_max >= 0)) {
 
             System.out.println("Errati entrambi i valori minimi"); //ritorna le misurazioni senza considerare i valori minimi
 
-            for (Misurazioni i : obj_list()) {
+            for (Misurazioni i : csv) {
 
                 if (i.getDMPS() <= param_dmps_max && i.getCPC() <= param_cpc_max) {
 
@@ -507,13 +472,11 @@ public class Functions {
                 }
             }
 
-        }
-
-        else if ((param_cpc_min >= 0 && param_cpc_max < 0) && (param_dmps_min >= 0 && param_dmps_max < 0)) {
+        } else if ((param_cpc_min >= 0 && param_cpc_max < 0) && (param_dmps_min >= 0 && param_dmps_max < 0)) {
 
             System.out.println("Errati entrambi i valori massimi"); //ritorna le misurazioni senza considerare i valori massimi
 
-            for (Misurazioni i : obj_list()) {
+            for (Misurazioni i : csv) {
 
                 if (i.getDMPS() >= param_dmps_min && i.getCPC() >= param_cpc_min) {
 
@@ -521,13 +484,11 @@ public class Functions {
                 }
             }
 
-        }
-
-        else if ((param_cpc_min < 0 && param_cpc_max < 0) && (param_dmps_min < 0 && param_dmps_max >= 0)) {
+        } else if ((param_cpc_min < 0 && param_cpc_max < 0) && (param_dmps_min < 0 && param_dmps_max >= 0)) {
 
             System.out.println("Solo dmps max corretto"); //ritorna le misurazioni minori di dmps_max
 
-            for (Misurazioni i : obj_list()) {
+            for (Misurazioni i : csv) {
 
                 if (i.getDMPS() <= param_dmps_max) {
 
@@ -535,13 +496,11 @@ public class Functions {
                 }
             }
 
-        }
-
-        else if ((param_cpc_min < 0 && param_cpc_max < 0) && (param_dmps_min >= 0 && param_dmps_max < 0)) {
+        } else if ((param_cpc_min < 0 && param_cpc_max < 0) && (param_dmps_min >= 0 && param_dmps_max < 0)) {
 
             System.out.println("Solo dmps min corretto"); //ritorna le misurazioni maggiori di dmps_min
 
-            for (Misurazioni i : obj_list()) {
+            for (Misurazioni i : csv) {
 
                 if (i.getDMPS() >= param_dmps_min) {
 
@@ -549,28 +508,24 @@ public class Functions {
                 }
             }
 
-        }
-
-        else if ((param_cpc_min < 0 && param_cpc_max >= 0) && (param_dmps_max < 0)) {
+        } else if ((param_cpc_min < 0 && param_cpc_max >= 0) && (param_dmps_max < 0)) {
 
             if (param_dmps_min < 0) {
 
                 System.out.println("Solo cpc_max corretto"); //ritorna le misurazioni minori di cpc_max
 
-                for (Misurazioni i : obj_list()) {
+                for (Misurazioni i : csv) {
 
                     if (i.getCPC() <= param_cpc_max) {
 
                         data.add(i);
                     }
                 }
-            }
-
-            else {
+            } else {
 
                 System.out.println("cpc_max e dmps_min corretti"); //ritorna le misurazioni minori di cpc_max e maggiori di dmps_min
 
-                for (Misurazioni i : obj_list()) {
+                for (Misurazioni i : csv) {
 
                     if ((i.getDMPS() >= param_dmps_min) && (i.getCPC() <= param_cpc_max)) {
 
@@ -579,28 +534,24 @@ public class Functions {
                 }
             }
 
-        }
-
-        else if ((param_cpc_min >= 0 && param_cpc_max < 0) && (param_dmps_min < 0 )) {
+        } else if ((param_cpc_min >= 0 && param_cpc_max < 0) && (param_dmps_min < 0)) {
 
             if (param_dmps_max < 0) {
 
                 System.out.println("Solo cpc_min corretto"); //ritorna le misurazioni maggiori di cpc_min
 
-                for (Misurazioni i : obj_list()) {
+                for (Misurazioni i : csv) {
 
                     if (i.getCPC() >= param_cpc_min) {
 
                         data.add(i);
                     }
                 }
-            }
-
-            else {
+            } else {
 
                 System.out.println("Solo cpc_min e dmps_max corretti"); //ritorna le misurazioni maggiori di cpc_min e minori di dmps_max
 
-                for (Misurazioni i : obj_list()) {
+                for (Misurazioni i : csv) {
 
                     if ((i.getCPC() >= param_cpc_min) && (i.getDMPS() <= param_dmps_max)) {
 
@@ -608,13 +559,11 @@ public class Functions {
                     }
                 }
             }
-        }
-
-        else {
+        } else {
 
             System.out.println("Parametri tutti corretti");
 
-            for (Misurazioni i : obj_list()) {
+            for (Misurazioni i : csv) {
 
                 if ((i.getCPC() >= param_cpc_min && i.getCPC() <= param_cpc_max) && (i.getDMPS() >= param_dmps_min && i.getDMPS() <= param_dmps_max)) {
 
@@ -629,11 +578,11 @@ public class Functions {
 
     /* FUNZIONI BASE DI QUELLE SOPRA */
 
-    public static ArrayList<Misurazioni> day(int param_day) throws Exception{
+    public static ArrayList<Misurazioni> day(int param_day) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        for(Misurazioni i : obj_list()) {
+        for (Misurazioni i : csv) {
 
             if (i.getDay() == param_day) {
                 data.add(i);
@@ -642,53 +591,39 @@ public class Functions {
         return data;
     }
 
-    public static ArrayList<Misurazioni> month(int param_month) throws Exception{
+    public static ArrayList<Misurazioni> month(int param_month) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        for(Misurazioni i : obj_list()) {
+        for (Misurazioni i : csv) {
 
-            if (i.getMonth() == param_month ) {
+            if (i.getMonth() == param_month) {
                 data.add(i);
             }
         }
         return data;
     }
 
-    public static ArrayList<Misurazioni> date(int param_day, int param_month) throws Exception{
+    public static ArrayList<Misurazioni> date(int param_day, int param_month) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        for(Misurazioni i : obj_list()) {
+        for (Misurazioni i : csv) {
 
-            if (i.getDay() == param_day && i.getMonth() == param_month ) {
+            if (i.getDay() == param_day && i.getMonth() == param_month) {
                 data.add(i);
             }
         }
         return data;
     }
 
-    public static ArrayList<Misurazioni> day_hour(int param_day, int param_hour) throws Exception{
+    public static ArrayList<Misurazioni> day_hour(int param_day, int param_hour) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        for(Misurazioni i : obj_list()) {
+        for (Misurazioni i : csv) {
 
-            if (i.getDay() == param_day && i.getHour() == param_hour ) {
-
-                data.add(i);
-            }
-        }
-        return data;
-    }
-
-    public static ArrayList<Misurazioni> month_hour(int param_month, int param_hour) throws Exception{
-
-        ArrayList<Misurazioni> data = new ArrayList<>();
-
-        for(Misurazioni i : obj_list()) {
-
-            if (i.getMonth() == param_month && i.getHour() == param_hour ) {
+            if (i.getDay() == param_day && i.getHour() == param_hour) {
 
                 data.add(i);
             }
@@ -696,13 +631,13 @@ public class Functions {
         return data;
     }
 
-    public static ArrayList<Misurazioni> date_hour(int param_day, int param_month, int param_hour) throws Exception{
+    public static ArrayList<Misurazioni> month_hour(int param_month, int param_hour) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        for(Misurazioni i : obj_list()) {
+        for (Misurazioni i : csv) {
 
-            if (i.getDay() == param_day && i.getMonth() == param_month && i.getHour() == param_hour ) {
+            if (i.getMonth() == param_month && i.getHour() == param_hour) {
 
                 data.add(i);
             }
@@ -710,16 +645,38 @@ public class Functions {
         return data;
     }
 
-    public static ArrayList<Misurazioni> hour(int param_hour) throws Exception{
+    public static ArrayList<Misurazioni> date_hour(int param_day, int param_month, int param_hour) throws Exception {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        for(Misurazioni i : obj_list()) {
+        for (Misurazioni i : csv) {
 
-            if (i.getHour() == param_hour ) {
+            if (i.getDay() == param_day && i.getMonth() == param_month && i.getHour() == param_hour) {
+
                 data.add(i);
             }
         }
         return data;
+    }
+
+    public static ArrayList<Misurazioni> hour(int param_hour) throws Exception {
+
+        ArrayList<Misurazioni> data = new ArrayList<>();
+
+        for (Misurazioni i : csv) {
+
+            if (i.getHour() == param_hour) {
+                data.add(i);
+            }
+        }
+        return data;
+    }
+
+    public static ArrayList<Misurazioni> getCsv() {
+        return csv;
+    }
+
+    public static void setCsv(ArrayList<Misurazioni> csv) {
+        Functions.csv = csv;
     }
 }
