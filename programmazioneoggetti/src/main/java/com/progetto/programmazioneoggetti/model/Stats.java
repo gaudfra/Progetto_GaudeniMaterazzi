@@ -1,7 +1,5 @@
 package com.progetto.programmazioneoggetti.model;
 
-import com.progetto.programmazioneoggetti.model.Misurazioni;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -18,17 +16,17 @@ public class Stats implements Serializable {
 
     //Attributi
 
-    double avg_dmps;
-    double avg_cpc;
-    double min_dmps;
-    double max_dmps;
-    double devstd_dmps;
-    double sum_dmps;
-    double min_cpc;
-    double max_cpc;
-    double devstd_cpc;
-    double sum_cpc;
-    double count;
+    private double avg_dmps;
+    private double avg_cpc;
+    private double min_dmps;
+    private double max_dmps;
+    private double devstd_dmps;
+    private double sum_dmps;
+    private double min_cpc;
+    private double max_cpc;
+    private double devstd_cpc;
+    private double sum_cpc;
+    private double count;
 
     //Metodi
 
