@@ -22,7 +22,7 @@ import java.lang.reflect.Field;
 
 public class Functions {
 
-    private static ArrayList<Misurazioni> csv;
+    private static ArrayList<Misurazioni> csv; // variabile usata per salvare gli oggetti del csv
 
     //Metodi
 
@@ -111,7 +111,8 @@ public class Functions {
             e.printStackTrace();
         }
 
-        csv = lista_oggetti;
+        csv = lista_oggetti; // salvataggio dei dati del csv in una lista per le funzioni successive
+        System.out.println("***Dati csv salvati***");
 
         return lista_oggetti;
     }
@@ -190,7 +191,11 @@ public class Functions {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        if ((param_day1 < 1 || param_day1 > 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_day2 >= 1 && param_day2 <= 31) && (param_month2 >= 1 && param_month2 <= 12)) {
+        if ((param_month2 < 1 || param_month2 > 12) && (param_month1 < 1 || param_month1 > 12)) {
+
+            System.out.println("Impossibile ricerca alternativa, entrambi i mesi sono errati");
+
+        }else if ((param_day1 < 1 || param_day1 > 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_day2 >= 1 && param_day2 <= 31) && (param_month2 >= 1 && param_month2 <= 12)) {
 
             System.out.println("Solo il limite inferiore day è errato"); //ritorna le misurazioni dal primo mese fino al limite superiore
 
@@ -201,6 +206,7 @@ public class Functions {
                     data.add(i);
                 }
             }
+
         } else if ((param_month1 < 1 || param_month1 > 12) && (param_day2 >= 1 && param_day2 <= 31) && (param_month2 >= 1 && param_month2 <= 12)) {
 
             System.out.println("Limite inferiore month errato");
@@ -229,6 +235,7 @@ public class Functions {
                     data.add(i);
                 }
             }
+
         } else if ((param_day1 >= 1 && param_day1 <= 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_month2 < 1 || param_month2 > 12)) {
 
             System.out.println("Limite superiore month errato"); //ritorna le misurazioni a partire dal limite inferiore fino alla fine dell'anno
@@ -243,6 +250,7 @@ public class Functions {
                     data.add(i);
                 }
             }
+
         } else if ((param_day1 < 1 || param_day1 > 31) && (param_day2 < 1 || param_day2 > 31)) {
 
             System.out.println("Limiti day errati");
@@ -285,6 +293,7 @@ public class Functions {
 
                 }
             }
+
         } else if ((param_day1 < 1 || param_day1 > 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_month2 < 1 || param_month2 > 12) && (param_day2 >= 1 && param_day2 <= 31)) {
 
             System.out.println("Day1 e Month2 sono errati"); //ritorna le misurazioni del primo mese e fino alla fine dell'anno
@@ -314,6 +323,12 @@ public class Functions {
 
             }
         }
+
+        else if ((param_day1 > param_day2 && param_month1 == param_month2) || (param_month1 > param_month2)) {
+
+            System.out.println("Limite inferiore maggiore del limite superiore");
+        }
+
         else {
 
             System.out.println("Parametri tutti corretti");
@@ -665,6 +680,8 @@ public class Functions {
         }
         return data;
     }
+
+    // Get e Set per la variabile csv
 
     public static ArrayList<Misurazioni> getCsv() {
         return csv;
