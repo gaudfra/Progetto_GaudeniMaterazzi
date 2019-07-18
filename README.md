@@ -12,20 +12,48 @@ Si visiti poi il link http://localhost:8080/, attraverso cui vengono ritornati g
 
 Attraverso rotte distinte si possono eseguire diverse operazioni sugli oggetti Misurazioni:
 
-- tramite /meta vengono ritornati i metadati
+- /meta
+- /stats
+- /date_hour
+- /date_hour_stats
+- /date_filter
+- /date_filter_stats
+- /values_filter
+
+#### Test per la verifica delle funzionalità
+
+Per avere la lista dei metadati usare /meta.
+
+Per avere la lista delle statistiche di tutte le misurazioni usare /stats.
+
+Per avere la lista delle misurazioni con una certa data e ora usare /date_hour.
+
+Per avere la lista delle statistiche sulle misurazioni con una certa data e ora usare /date_hour_stats.
+
+Per avere la lista delle misurazioni comprese fra due date usare /date_filter.
+
+Per avere la lista delle statistiche sulle misurazioni comprese fra due date usare /date_filter_stats.
+
+Per avere la lista delle misurazioni comprese fra due valori di CPC e DMPS usare /values_filter.
+
+<strong>Per i vari filtri se si omettono parametri o si inseriscono errati si avranno delle ricerche alternative coerenti.</strong>
+
+#### Esempi di esecuzione
+
+- tramite <strong>/meta</strong> vengono ritornati i metadati
 <img width="904" alt="meta" src="https://user-images.githubusercontent.com/52038801/61414918-927fa600-a8ef-11e9-9829-aacb60762572.png">
 
 
 
 
-- tramite /stats vengono restituite le statistiche su tutti i dati
+- tramite <strong>/stats</strong> vengono restituite le statistiche su tutti i dati
 <img width="904" alt="stats" src="https://user-images.githubusercontent.com/52038801/61414996-c955bc00-a8ef-11e9-9a07-3b276309a331.png">
 
 
 
 
 
-- tramite /date_hour vengono restituiti tutti i dati con quella specifica data, gestendo eventuali eccezioni
+- tramite <strong>/date_hour</strong> vengono restituiti tutti i dati con quella specifica data, gestendo eventuali eccezioni
 <img width="904" alt="datehour_ok" src="https://user-images.githubusercontent.com/52038801/61415012-d96d9b80-a8ef-11e9-8fa4-28ee9ef0fb51.png">
 
   Esempio con eccezione: inserendo solo l'ora vengono ritornate tutte le misurazioni fatte in quella specifica ora 
@@ -35,7 +63,7 @@ Attraverso rotte distinte si possono eseguire diverse operazioni sugli oggetti M
 
 
 
-- tramite /date_hour_stats vengono restituite le statistiche sui dati con quella specifica data, gestendo eventuali eccezioni
+- tramite <strong>/date_hour_stats</strong> vengono restituite le statistiche sui dati con quella specifica data, gestendo eventuali eccezioni
 <img width="888" alt="datehourstats" src="https://user-images.githubusercontent.com/52038801/61415091-189bec80-a8f0-11e9-9a68-1825b8a1cfa9.png">
 
   Esempio con eccezione: inserendo solo giorno e mese vengono calcolate le statistiche su quel giorno di quel mese
@@ -45,7 +73,7 @@ Attraverso rotte distinte si possono eseguire diverse operazioni sugli oggetti M
 
 
 
-- tramite /date_filter vengono restituiti i dati compresi tra due specifiche date, gestendo eventuali eccezioni
+- tramite <strong>/date_filter</strong> vengono restituiti i dati compresi tra due specifiche date, gestendo eventuali eccezioni
 <img width="904" alt="datefilter" src="https://user-images.githubusercontent.com/52038801/61415128-36695180-a8f0-11e9-96c1-ecd3cdd39e31.png">
 
   Esempio con eccezione: tralasciando solo il giorno minimo, vengono ritornate le misurazioni a partire dal primo giorno di quel mese
@@ -55,7 +83,7 @@ Attraverso rotte distinte si possono eseguire diverse operazioni sugli oggetti M
 
 
 
-- tramite /date_filter_stats vengono restituite le statistiche sui dati compresi tra due specifiche date, gestendo eventuali 
+- tramite <strong>/date_filter_stats</strong> vengono restituite le statistiche sui dati compresi tra due specifiche date, gestendo eventuali 
 eccezioni
 <img width="904" alt="datefilterstats" src="https://user-images.githubusercontent.com/52038801/61415192-56991080-a8f0-11e9-803f-d4f9e789bf40.png">
 
@@ -66,7 +94,7 @@ eccezioni
 
 
 
-- tramite /values_filter vengono restituiti i dati con misurazioni comprese tra due valori limite di cpc e dmps
+- tramite <strong>/values_filter</strong> vengono restituiti i dati con misurazioni comprese tra due valori limite di cpc e dmps
 <img width="904" alt="valuesfilter" src="https://user-images.githubusercontent.com/52038801/61415248-72041b80-a8f0-11e9-9164-18f4d683a319.png">
 
 
@@ -83,7 +111,7 @@ eccezioni
 
 
 ### Diagramma delle classi
-<img width="888" alt="classdiagram" src="https://user-images.githubusercontent.com/52038801/61415323-9cee6f80-a8f0-11e9-9a25-842d624f1855.png">
+<img width="888" alt="diagrammaclassifinale" src="https://user-images.githubusercontent.com/52038801/61491750-30d34080-a9b0-11e9-8e7b-efe1d182f0ab.png">
 
 
 ### Diagramma degli stati
