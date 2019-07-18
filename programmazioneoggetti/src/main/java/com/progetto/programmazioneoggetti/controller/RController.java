@@ -59,7 +59,7 @@ public class RController {
         else {
 
             ArrayList<Stats> lista = new ArrayList<>();
-            lista.add(new Stats(Functions.obj_list()));
+            lista.add(new Stats(Functions.getCsv()));
             return lista;
         }
     }
