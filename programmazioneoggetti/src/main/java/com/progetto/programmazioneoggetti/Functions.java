@@ -190,11 +190,7 @@ public class Functions {
 
         ArrayList<Misurazioni> data = new ArrayList<>();
 
-        if ((param_month2 < 1 || param_month2 > 12) && (param_month1 < 1 || param_month1 > 12)) {
-
-            System.out.println("Impossibile ricerca alternativa, entrambi i mesi sono errati");
-
-        } else if ((param_day1 < 1 || param_day1 > 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_day2 >= 1 && param_day2 <= 31) && (param_month2 >= 1 && param_month2 <= 12)) {
+        if ((param_day1 < 1 || param_day1 > 31) && (param_month1 >= 1 && param_month1 <= 12) && (param_day2 >= 1 && param_day2 <= 31) && (param_month2 >= 1 && param_month2 <= 12)) {
 
             System.out.println("Solo il limite inferiore day è errato"); //ritorna le misurazioni dal primo mese fino al limite superiore
 
@@ -317,10 +313,8 @@ public class Functions {
                 }
 
             }
-        } else if ((param_day1 > param_day2 && param_month1 == param_month2) || (param_month1 > param_month2)) {
-
-            System.out.println("Limite inferiore maggiore del limite superiore");
-        } else {
+        }
+        else {
 
             System.out.println("Parametri tutti corretti");
 
