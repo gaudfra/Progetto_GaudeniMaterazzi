@@ -27,13 +27,13 @@ public class RController {
     @RequestMapping( value = "/meta", method = RequestMethod.GET, produces = "application/json" )
     public static ArrayList meta_list () throws Exception {
 
-        return Functions.obj_meta(); // finire di implementare
+        return Functions.obj_meta();
     }
 
     @RequestMapping( value = "/stats", method = RequestMethod.GET, produces = "application/json")
     public Stats obj_list_stats() throws Exception{
 
-        return new Stats(Functions.obj_list());
+        return new Stats(Functions.getCsv());
     }
 
     @RequestMapping( value = "/date_hour", method = RequestMethod.GET, produces = "application/json")
@@ -59,7 +59,7 @@ public class RController {
         else {
 
             ArrayList<Stats> lista = new ArrayList<>();
-            lista.add(new Stats(Functions.getCsv()));
+            lista.add(new Stats(Functions.obj_date_hour(param_day,param_month,param_hour)));
             return lista;
         }
     }
@@ -79,11 +79,18 @@ public class RController {
                                    @RequestParam(name = "day_max", defaultValue = "-1") int param_day2,
                                    @RequestParam(name = "month_max", defaultValue = "-1") int param_month2) throws Exception {
 
-        if ((param_day1 < 1 || param_day1 > 31) && (param_month1 < 1 || param_month1 > 12) && (param_day2 < 1 || param_day2 > 31) && (param_month2 < 1 || param_month2 > 12)) {
-
-            System.out.println("Parametri tutti errati, impossibile calcolare statistiche");
+        if ((param_month1 < 1 || param_month1 > 12) && (param_month2 < 1 || param_month2 > 12))
+        {
+            System.out.println("Entrambi i mesi sono errati, impossibile calcolare statistiche");
 
             return new ArrayList();
+        }
+        else if ((param_day1 > param_day2 && param_month1 == param_month2) || ((param_month1 > param_month2) && (param_month2 > 0))) {
+
+            System.out.println("Limite inferiore maggiore del limite superiore, impossibile calcolare statistiche");
+
+            return new ArrayList();
+
         }
         else{
 
