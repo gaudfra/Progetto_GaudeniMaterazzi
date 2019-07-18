@@ -25,7 +25,7 @@ public class RController {
     }
 
     @RequestMapping( value = "/meta", method = RequestMethod.GET, produces = "application/json" )
-    public static ArrayList meta_list () throws Exception {
+    public ArrayList meta_list () throws Exception {
 
         return Functions.obj_meta();
     }
