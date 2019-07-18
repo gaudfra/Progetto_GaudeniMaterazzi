@@ -112,6 +112,7 @@ public class Functions {
         }
 
         csv = lista_oggetti; // salvataggio dei dati del csv in una lista per le funzioni successive
+        System.out.println("***Dati csv salvati***");
 
         return lista_oggetti;
     }
